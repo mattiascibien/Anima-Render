@@ -18,10 +18,10 @@ std::string extractDirectory(const std::string& path )
 }
 
 //Caricamento della scena da file
-Scene Scene::load(string fileName)
+Scene* Scene::load(string fileName)
 {
 	int lightCount = 0;
-	Scene scene;
+	Scene *scene = new Scene();
 	std::string scenePath = extractDirectory(fileName);
 	ifstream fstream(fileName.c_str());
 
@@ -39,12 +39,12 @@ Scene Scene::load(string fileName)
 				{
 					throw ParseException(FILE_MISSING);
 				}
-				scene.addCamera(camera);
+				scene->addCamera(camera);
 			}
 			else if(key.compare("Transform") == 0) //trovata una trasformazione affine
 			{
 				Transform transform = parseTransform(fstream, scenePath, lightCount);
-				scene.rootTransform.addChild(transform);
+				scene->rootTransform.addChild(transform);
 			}
 			else if(key.compare("#") == 0) //commento, va ignorato
 				skipComment(fstream);
