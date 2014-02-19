@@ -2,9 +2,8 @@
 *  This file has been taken from a OpenGL example at http://duriansoftware.com/joe/An-intro-to-modern-OpenGL.-Table-of-Contents.html
 */
 
+#include "util.h"
 
-
-#include <GL/glew.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
