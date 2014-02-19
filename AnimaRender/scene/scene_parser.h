@@ -14,7 +14,7 @@
 #define WRONG_SYNTAX "Syntax Error"
 #define FILE_MISSING "One file specified in the scene is missing"
 #define EXCEED_LIGHTS "A Scene can have only up to 8 lights"
-#define EXCEED_TEXTURE_LIMITS "A texture index is more than 7"
+#define EXCEED_TEXTURE_LIMITS "Texture index can only be between 0 and 7"
 
 class ParseException: public exception
 {

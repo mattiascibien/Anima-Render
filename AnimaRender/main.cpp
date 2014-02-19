@@ -267,10 +267,10 @@ int main(int argc, char* argv[])
 	//Parsing della riga di comando
 	po::options_description desc("Opzioni disponibili");
 	desc.add_options()
-		( "help", "mostra il messaggio di aiuto")
-		( "width", po::value<int>(&width)->default_value(500), "larghezza finestra")
-		( "height", po::value<int>(&height)->default_value(500), "altezza finestra")
-		( "scene", po::value<string>(), "file da renderizzare a schermo")
+		( "help", "show help")
+		( "width", po::value<int>(&width)->default_value(500), "window width")
+		( "height", po::value<int>(&height)->default_value(500), "windows height")
+		( "scene", po::value<string>(), "file to render")
 		;
 	po::positional_options_description pos;
 	pos.add("scene", 1);
@@ -303,7 +303,7 @@ int main(int argc, char* argv[])
 	else
 	{
 		cout << desc << endl;
-		cout << "Deve essere specificata una scena da renderizzare." << endl;
+		cout << "A scene must be specified." << endl;
 		return EXIT_FAILURE;
 	}
 
@@ -329,7 +329,7 @@ int main(int argc, char* argv[])
 	glewInit();
 	if(!GLEW_VERSION_2_0)
 	{
-		cout << "OpenGL 2.0 non disponibile nel sistema, controllare di avere installati i driver corretti." << endl;
+		cout << "OpenGL 2.0 not available, check if the current driver supports it." << endl;
 		return EXIT_FAILURE;
 	}
 
