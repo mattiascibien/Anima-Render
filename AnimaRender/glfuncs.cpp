@@ -1,6 +1,7 @@
 #include "glfuncs.h"
 
 #include "utils/util.h"
+#include "texture-formats/tgareader.h"
 
 #include <iostream>
 
