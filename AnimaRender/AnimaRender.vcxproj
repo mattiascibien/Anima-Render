@@ -14,6 +14,8 @@
     <ProjectGuid>{5A41EF30-42A9-43D6-9177-E867086DABBC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>AnimaRender</RootNamespace>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -123,6 +125,7 @@
     <Import Project="..\packages\glew.1.9.0.1\build\native\glew.targets" Condition="Exists('..\packages\glew.1.9.0.1\build\native\glew.targets')" />
     <Import Project="..\packages\boost.1.55.0.10\build\native\boost.targets" Condition="Exists('..\packages\boost.1.55.0.10\build\native\boost.targets')" />
     <Import Project="..\packages\boost_program_options.1.55.0.16\build\native\boost_program_options.targets" Condition="Exists('..\packages\boost_program_options.1.55.0.16\build\native\boost_program_options.targets')" />
+    <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -134,5 +137,6 @@
     <Error Condition="!Exists('..\packages\glew.1.9.0.1\build\native\glew.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glew.1.9.0.1\build\native\glew.targets'))" />
     <Error Condition="!Exists('..\packages\boost.1.55.0.10\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.55.0.10\build\native\boost.targets'))" />
     <Error Condition="!Exists('..\packages\boost_program_options.1.55.0.16\build\native\boost_program_options.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_program_options.1.55.0.16\build\native\boost_program_options.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
 </Project>
