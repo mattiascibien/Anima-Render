@@ -1,0 +1,3 @@
+[submodule "content"]
+	path = content
+	url = https://mattiascibien@bitbucket.org/mattiascibien/anima-render-content.git
