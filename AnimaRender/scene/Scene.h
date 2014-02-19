@@ -8,7 +8,7 @@ class Scene
 public:
 	Camera& getActiveCamera();
 
-	static Scene load(string fileName);
+	static Scene* load(string fileName);
 	void addCamera(Camera camera);
 
 	void prevCamera();
@@ -20,9 +20,9 @@ public:
 
 
 	//TODO: dovrebbe essere private
-	Scene();
 
 private:
+	Scene();
 
 	std::vector<Camera> cameras;
 	int activeCamera;

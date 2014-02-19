@@ -16,7 +16,7 @@ using namespace std;
 
 namespace po = boost::program_options;
 
-Scene scn;
+Scene *scn;
 
 GLfloat fbo_vertices[] = {
 	-1.0f, -1.0f, -1.0f,
@@ -40,33 +40,33 @@ GLuint vbo_fbo_vertices, vbo_fbo_st, fbo_elements_buf;
 static void render(void)
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-	scn.getActiveCamera().cameraMove();
+	scn->getActiveCamera().cameraMove();
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	gluLookAt(
-		scn.getActiveCamera().getPosition().x, 
-		scn.getActiveCamera().getPosition().y, 
-		scn.getActiveCamera().getPosition().z,
-		scn.getActiveCamera().getDirection().x,
-		scn.getActiveCamera().getDirection().y,
-		scn.getActiveCamera().getDirection().z,
-		scn.getActiveCamera().getUp().x,
-		scn.getActiveCamera().getUp().y,
-		scn.getActiveCamera().getUp().z
+		scn->getActiveCamera().getPosition().x, 
+		scn->getActiveCamera().getPosition().y, 
+		scn->getActiveCamera().getPosition().z,
+		scn->getActiveCamera().getDirection().x,
+		scn->getActiveCamera().getDirection().y,
+		scn->getActiveCamera().getDirection().z,
+		scn->getActiveCamera().getUp().x,
+		scn->getActiveCamera().getUp().y,
+		scn->getActiveCamera().getUp().z
 		);
-	scn.previsitLights();
-	scn.render();
+	scn->previsitLights();
+	scn->render();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-	glUseProgram(scn.getActiveCamera().postprocessData.program);	
+	glUseProgram(scn->getActiveCamera().postprocessData.program);	
 
-	glUniform1f(scn.getActiveCamera().textureHeightUniformLocation, (float)glutGet(GLUT_WINDOW_HEIGHT));
+	glUniform1f(scn->getActiveCamera().textureHeightUniformLocation, (float)glutGet(GLUT_WINDOW_HEIGHT));
 
-	glUniform1f(scn.getActiveCamera().textureWidthUniformLocation, (float)glutGet(GLUT_WINDOW_WIDTH));
+	glUniform1f(scn->getActiveCamera().textureWidthUniformLocation, (float)glutGet(GLUT_WINDOW_WIDTH));
 
-	glUniform1i(scn.getActiveCamera().textureUniformLocation, 9);
+	glUniform1i(scn->getActiveCamera().textureUniformLocation, 9);
 	glActiveTexture(GL_TEXTURE9);
 	glBindTexture(GL_TEXTURE_2D, fbo_texture);
 
@@ -105,7 +105,7 @@ static void reshape(int width, int height)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glViewport(0, 0, width, height);
-	gluPerspective(scn.getActiveCamera().getFovY()*2, (float)width/(float)height, 0.01, 50.0);
+	gluPerspective(scn->getActiveCamera().getFovY()*2, (float)width/(float)height, 0.01, 50.0);
 	glMatrixMode(GL_MODELVIEW);
 
 	// Rescale FBO and RBO as well
@@ -129,34 +129,34 @@ static void processNormalKeys(unsigned char key, int xx, int yy) {
 
 		switch (key){
 		case 'q':			// Roll verso sinistra
-			scn.getActiveCamera().setCameraRoll(1);
+			scn->getActiveCamera().setCameraRoll(1);
 			break;
 		case 'e':			// Roll verso destra
-			scn.getActiveCamera().setCameraRoll(-1);
+			scn->getActiveCamera().setCameraRoll(-1);
 			break;
 		case 'w':			// Movimento avanti
-			scn.getActiveCamera().setMoveAhead(1);
+			scn->getActiveCamera().setMoveAhead(1);
 			break;
 		case 's':			// Movimento indietro
-			scn.getActiveCamera().setMoveAhead(-1);
+			scn->getActiveCamera().setMoveAhead(-1);
 			break;
 		case 'a':			// Movimento a sinistra
-			scn.getActiveCamera().setMoveLateral(-1);
+			scn->getActiveCamera().setMoveLateral(-1);
 			break;
 		case 'd':			// Movimento a destra
-			scn.getActiveCamera().setMoveLateral(1);
+			scn->getActiveCamera().setMoveLateral(1);
 			break;
 		case 'z':			// Movimento in su
-			scn.getActiveCamera().setMoveUp(-1);
+			scn->getActiveCamera().setMoveUp(-1);
 			break;
 		case 'x':			// Movimento in giù
-			scn.getActiveCamera().setMoveUp(1);
+			scn->getActiveCamera().setMoveUp(1);
 			break;
 		case 'o':			// Camera precedente
-			scn.prevCamera();
+			scn->prevCamera();
 			break;
 		case 'p':			// Camera successiva
-			scn.nextCamera();
+			scn->nextCamera();
 			break;
 		}
 
@@ -169,19 +169,19 @@ static void keyUp(unsigned char key, int xx, int yy){
 	switch (key){
 		case 'w':
 		case 's':			
-			scn.getActiveCamera().setMoveAhead(0);
+			scn->getActiveCamera().setMoveAhead(0);
 			break;
 		case 'a':
 		case 'd':			
-			scn.getActiveCamera().setMoveLateral(0);
+			scn->getActiveCamera().setMoveLateral(0);
 			break;
 		case 'q':
 		case 'e':			
-			scn.getActiveCamera().setCameraRoll(0);
+			scn->getActiveCamera().setCameraRoll(0);
 			break;
 		case 'z':
 		case 'x':			
-			scn.getActiveCamera().setMoveUp(0);
+			scn->getActiveCamera().setMoveUp(0);
 			break;
 		}
 }
@@ -194,7 +194,7 @@ static void keyUp(unsigned char key, int xx, int yy){
 static void mouseMove(int x, int y)
 {
 	// Rotazione del mouse
-	scn.getActiveCamera().mouseMove(x, y);
+	scn->getActiveCamera().mouseMove(x, y);
 }
 
 static void mouseButton(int button, int state, int x, int y) {
@@ -204,10 +204,10 @@ static void mouseButton(int button, int state, int x, int y) {
 
 		if (state == GLUT_UP)
 		{	
-			scn.getActiveCamera().resetMouseMove();
+			scn->getActiveCamera().resetMouseMove();
 		}
 		else  {
-			scn.getActiveCamera().setMouseMove(x,y);
+			scn->getActiveCamera().setMouseMove(x,y);
 		}
 	}
 }
@@ -355,6 +355,8 @@ int main(int argc, char* argv[])
 
 	//Render loop principale
 	glutMainLoop();
+
+	delete scn;
 
 	return EXIT_SUCCESS;
 }
