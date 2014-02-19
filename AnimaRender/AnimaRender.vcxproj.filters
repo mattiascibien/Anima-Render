@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\data">
+      <UniqueIdentifier>{1b59ef47-4873-46da-a43d-1846548bd8be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\objloader">
+      <UniqueIdentifier>{1621820e-28e6-4cb0-8a0e-6a5f67e905ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scene">
+      <UniqueIdentifier>{12194fc1-eb11-486f-ab74-22eba1720e81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\utils">
+      <UniqueIdentifier>{3ebff440-afa3-409d-b309-5630e0565e7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utils">
+      <UniqueIdentifier>{89d54340-24c1-49d7-960d-8597027e4074}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scene">
+      <UniqueIdentifier>{e2731e3d-72b3-42a4-b64d-1a05cb471239}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\objloader">
+      <UniqueIdentifier>{92cc314b-e34f-4972-9e5d-8b0dd0d4d7ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\boost">
+      <UniqueIdentifier>{5a1b6fc9-a9e3-43dc-a566-06bb8adf871b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="AnimaRender.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="data\Color.h">
+      <Filter>Header Files\data</Filter>
+    </ClInclude>
+    <ClInclude Include="data\Vector.h">
+      <Filter>Header Files\data</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\util.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\Camera.h">
+      <Filter>Header Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\Light.h">
+      <Filter>Header Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\Object.h">
+      <Filter>Header Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\Scene.h">
+      <Filter>Header Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\scene_parser.h">
+      <Filter>Header Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\Transform.h">
+      <Filter>Header Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="objloader\list.h">
+      <Filter>Header Files\objloader</Filter>
+    </ClInclude>
+    <ClInclude Include="objloader\obj_parser.h">
+      <Filter>Header Files\objloader</Filter>
+    </ClInclude>
+    <ClInclude Include="objloader\objLoader.h">
+      <Filter>Header Files\objloader</Filter>
+    </ClInclude>
+    <ClInclude Include="objloader\string_extra.h">
+      <Filter>Header Files\objloader</Filter>
+    </ClInclude>
+    <ClInclude Include="glfuncs.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="utils\util.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\Camera.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\Light.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\Object.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\Scene.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\scene_parser.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\Transform.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="objloader\list.cpp">
+      <Filter>Source Files\objloader</Filter>
+    </ClCompile>
+    <ClCompile Include="objloader\obj_parser.cpp">
+      <Filter>Source Files\objloader</Filter>
+    </ClCompile>
+    <ClCompile Include="objloader\objLoader.cpp">
+      <Filter>Source Files\objloader</Filter>
+    </ClCompile>
+    <ClCompile Include="objloader\string_extra.cpp">
+      <Filter>Source Files\objloader</Filter>
+    </ClCompile>
+    <ClCompile Include="glfuncs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.cmdline.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.config_file.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.convert.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.options_description.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.parsers.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.positional_options.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.split.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.utf8_codecvt_facet.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.value_semantic.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.variables_map.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.winmain.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

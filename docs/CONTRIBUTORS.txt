@@ -1,0 +1,2 @@
+Mattias Cibien: main rendering engine
+Andrea Pellegrini: camera movement code and other fixes
