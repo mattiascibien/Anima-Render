@@ -15,5 +15,5 @@ void *read_png(const char *filename, unsigned int *width, unsigned int *height)
 		return NULL;
 	}
 
-	return &image[0];
+	return &(*image)[0];
 }
