@@ -92,6 +92,9 @@
     <ClInclude Include="texture-formats\tgareader.h">
       <Filter>Header Files\texture-formats</Filter>
     </ClInclude>
+    <ClInclude Include="texture-formats\pngreader.h">
+      <Filter>Header Files\texture-formats</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utils\util.cpp">
@@ -167,6 +170,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="texture-formats\tgareader.cpp">
+      <Filter>Source Files\texture-formats</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\lodepng.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="texture-formats\pngreader.cpp">
       <Filter>Source Files\texture-formats</Filter>
     </ClCompile>
   </ItemGroup>
