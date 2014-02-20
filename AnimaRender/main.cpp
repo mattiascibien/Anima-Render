@@ -265,7 +265,7 @@ int main(int argc, char* argv[])
 	string scenefile;
 
 	//Parsing della riga di comando
-	po::options_description desc("Opzioni disponibili");
+	po::options_description desc("Available options");
 	desc.add_options()
 		( "help", "show help")
 		( "width", po::value<int>(&width)->default_value(500), "window width")
