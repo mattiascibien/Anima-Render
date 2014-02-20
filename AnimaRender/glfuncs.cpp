@@ -3,6 +3,7 @@
 #include "utils/util.h"
 #include "texture-formats/tgareader.h"
 #include "texture-formats/pngreader.h"
+#include "texture-formats/bmpreader.h"
 
 #include <iostream>
 #include <boost\filesystem.hpp>
@@ -33,6 +34,11 @@ void *read_texture(const char *filename, int *width, int *height)
 	if (extension == ".tga")
 	{
 		return read_tga(filename, width, height);
+	}
+
+	if (extension == ".bmp")
+	{
+		return read_bmp(filename, width, height);
 	}
 
 	return NULL;

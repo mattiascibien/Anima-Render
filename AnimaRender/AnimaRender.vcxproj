@@ -97,6 +97,7 @@
     <ClInclude Include="scene\Scene.h" />
     <ClInclude Include="scene\scene_parser.h" />
     <ClInclude Include="scene\Transform.h" />
+    <ClInclude Include="texture-formats\bmpreader.h" />
     <ClInclude Include="texture-formats\pngreader.h" />
     <ClInclude Include="texture-formats\tgareader.h" />
     <ClInclude Include="utils\util.h" />
@@ -114,6 +115,7 @@
     <ClCompile Include="scene\Scene.cpp" />
     <ClCompile Include="scene\scene_parser.cpp" />
     <ClCompile Include="scene\Transform.cpp" />
+    <ClCompile Include="texture-formats\bmpreader.cpp" />
     <ClCompile Include="texture-formats\pngreader.cpp" />
     <ClCompile Include="texture-formats\tgareader.cpp" />
     <ClCompile Include="utils\util.cpp" />
