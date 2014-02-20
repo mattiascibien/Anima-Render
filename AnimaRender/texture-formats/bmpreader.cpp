@@ -29,8 +29,8 @@ void *read_bmp(const char *filename, int *width, int *height)
 	// Read ints from the byte array
 	dataPos = *(int*) &(header[0x0A]);
 	imageSize = *(int*) &(header[0x22]);
-	width = (int*) &(header[0x12]);
-	height = (int*) &(header[0x16]);
+	*width = (int) (header[0x12]);
+	*height = (int) (header[0x16]);
 
 	// Some BMP files are misformatted, guess missing information
 	if (imageSize == 0)    
