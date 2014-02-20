@@ -2,8 +2,10 @@
 
 #include "utils/util.h"
 #include "texture-formats/tgareader.h"
+#include "texture-formats/pngreader.h"
 
 #include <iostream>
+#include <boost\filesystem.hpp>
 
 //Crea un buffer per OpenGL
 GLuint make_buffer(
@@ -19,12 +21,30 @@ GLuint make_buffer(
 	return buffer;
 }
 
+void *read_texture(const char *filename, int *width, int *height)
+{
+	std::string extension = boost::filesystem::extension(filename);
+
+	if (extension == ".png")
+	{
+		return read_png(filename, (unsigned *) width, (unsigned *) height);
+	}
+
+	if (extension == ".tga")
+	{
+		return read_tga(filename, width, height);
+	}
+
+	return NULL;
+}
+
 //Crea una texure per OpenGL
 GLuint make_texture(const char *filename)
 {
 	GLuint texture;
 	int width, height;
-	void *pixels = read_tga(filename, &width, &height);
+	void *pixels = read_texture(filename, &width, &height);
+
 
 	if (!pixels)
 		return 0;
