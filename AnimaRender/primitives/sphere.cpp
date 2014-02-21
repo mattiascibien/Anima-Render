@@ -3,11 +3,8 @@
 
 #include <boost\math\constants\constants.hpp>
 
-void make_sphere(std::vector<GLfloat> &vertices, std::vector<GLfloat> &normals, std::vector<GLfloat> &stCoordinates, std::vector<GLushort> &elements)
+void make_sphere(std::vector<GLfloat> &vertices, std::vector<GLfloat> &normals, std::vector<GLfloat> &stCoordinates, std::vector<GLushort> &elements, int rings, int sectors)
 {
-	//TODO: make them variable
-	int rings = 30;
-	int sectors = 30;
 	int radius = 1;
 
 	float const R = 1. / (float) (rings - 1);

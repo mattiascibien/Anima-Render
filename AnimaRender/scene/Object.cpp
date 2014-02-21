@@ -9,6 +9,8 @@
 #include "Light.h"
 
 #include <list>
+#include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>
 
 //I parametri di default vengono inizializzati nel costruttore
 Object::Object()
@@ -180,9 +182,25 @@ int Object::makeResources()
 	}
 	else
 	{
-		if (primitiveKind.compare("sphere") == 0)
+		if (primitiveKind.find("sphere") == 0)
 		{
-			make_sphere(vertices, normals, stCoordinates, elements);
+			std::vector<std::string> values;
+			boost::split(values, primitiveKind, boost::is_any_of(" "));
+
+			int rings = 10;
+			int sectors = 10;
+
+			if (values.size() > 2)
+			{
+				rings = atoi(values.at(2).c_str());
+			}
+
+			if (values.size() > 1)
+			{
+				sectors = atoi(values.at(1).c_str());
+			}
+
+			make_sphere(vertices, normals, stCoordinates, elements, rings, sectors);
 		}
 		else if (primitiveKind.compare("cube") == 0)
 		{
