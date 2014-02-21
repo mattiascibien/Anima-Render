@@ -97,6 +97,9 @@
     <ClInclude Include="scene\Scene.h" />
     <ClInclude Include="scene\scene_parser.h" />
     <ClInclude Include="scene\Transform.h" />
+    <ClInclude Include="texture-formats\bmpreader.h" />
+    <ClInclude Include="texture-formats\pngreader.h" />
+    <ClInclude Include="texture-formats\tgareader.h" />
     <ClInclude Include="utils\util.h" />
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +115,9 @@
     <ClCompile Include="scene\Scene.cpp" />
     <ClCompile Include="scene\scene_parser.cpp" />
     <ClCompile Include="scene\Transform.cpp" />
+    <ClCompile Include="texture-formats\bmpreader.cpp" />
+    <ClCompile Include="texture-formats\pngreader.cpp" />
+    <ClCompile Include="texture-formats\tgareader.cpp" />
     <ClCompile Include="utils\util.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -126,6 +132,9 @@
     <Import Project="..\packages\boost.1.55.0.10\build\native\boost.targets" Condition="Exists('..\packages\boost.1.55.0.10\build\native\boost.targets')" />
     <Import Project="..\packages\boost_program_options.1.55.0.16\build\native\boost_program_options.targets" Condition="Exists('..\packages\boost_program_options.1.55.0.16\build\native\boost_program_options.targets')" />
     <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+    <Import Project="..\packages\boost_filesystem.1.55.0.16\build\native\boost_filesystem.targets" Condition="Exists('..\packages\boost_filesystem.1.55.0.16\build\native\boost_filesystem.targets')" />
+    <Import Project="..\packages\boost_system.1.55.0.16\build\native\boost_system.targets" Condition="Exists('..\packages\boost_system.1.55.0.16\build\native\boost_system.targets')" />
+    <Import Project="..\packages\LodePNG.1.0.0\build\native\lodepng.targets" Condition="Exists('..\packages\LodePNG.1.0.0\build\native\lodepng.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -138,5 +147,8 @@
     <Error Condition="!Exists('..\packages\boost.1.55.0.10\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.55.0.10\build\native\boost.targets'))" />
     <Error Condition="!Exists('..\packages\boost_program_options.1.55.0.16\build\native\boost_program_options.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_program_options.1.55.0.16\build\native\boost_program_options.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\packages\LodePNG.1.0.0\build\native\lodepng.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\LodePNG.1.0.0\build\native\lodepng.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_filesystem.1.55.0.16\build\native\boost_filesystem.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_filesystem.1.55.0.16\build\native\boost_filesystem.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_system.1.55.0.16\build\native\boost_system.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_system.1.55.0.16\build\native\boost_system.targets'))" />
   </Target>
 </Project>

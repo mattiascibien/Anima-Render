@@ -34,6 +34,12 @@
     <Filter Include="Source Files\objloader">
       <UniqueIdentifier>{92cc314b-e34f-4972-9e5d-8b0dd0d4d7ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\texture-formats">
+      <UniqueIdentifier>{770ab08f-45fb-48a3-9678-185f0b5716e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\texture-formats">
+      <UniqueIdentifier>{1be75304-5c95-4ebb-a473-93e9035a307f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnimaRender.rc">
@@ -82,6 +88,15 @@
     </ClInclude>
     <ClInclude Include="glfuncs.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="texture-formats\tgareader.h">
+      <Filter>Header Files\texture-formats</Filter>
+    </ClInclude>
+    <ClInclude Include="texture-formats\pngreader.h">
+      <Filter>Header Files\texture-formats</Filter>
+    </ClInclude>
+    <ClInclude Include="texture-formats\bmpreader.h">
+      <Filter>Header Files\texture-formats</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +171,15 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.winmain.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="texture-formats\tgareader.cpp">
+      <Filter>Source Files\texture-formats</Filter>
+    </ClCompile>
+    <ClCompile Include="texture-formats\pngreader.cpp">
+      <Filter>Source Files\texture-formats</Filter>
+    </ClCompile>
+    <ClCompile Include="texture-formats\bmpreader.cpp">
+      <Filter>Source Files\texture-formats</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,12 @@
 #include "glfuncs.h"
 
 #include "utils/util.h"
+#include "texture-formats/tgareader.h"
+#include "texture-formats/pngreader.h"
+#include "texture-formats/bmpreader.h"
 
 #include <iostream>
+#include <boost\filesystem.hpp>
 
 //Crea un buffer per OpenGL
 GLuint make_buffer(
@@ -18,12 +22,39 @@ GLuint make_buffer(
 	return buffer;
 }
 
+void *read_texture(const char *filename, int *width, int *height, GLuint &format)
+{
+	std::string extension = boost::filesystem::extension(filename);
+
+	if (extension == ".png")
+	{
+		format = GL_RGBA;
+		return read_png(filename, (unsigned *) width, (unsigned *) height);
+	}
+
+	if (extension == ".tga")
+	{
+		format = GL_BGR;
+		return read_tga(filename, width, height);
+	}
+
+	if (extension == ".bmp")
+	{
+		format = GL_BGR;
+		return read_bmp(filename, width, height);
+	}
+
+	return NULL;
+}
+
 //Crea una texure per OpenGL
 GLuint make_texture(const char *filename)
 {
 	GLuint texture;
 	int width, height;
-	void *pixels = read_tga(filename, &width, &height);
+	GLuint format;
+	void *pixels = read_texture(filename, &width, &height, format);
+
 
 	if (!pixels)
 		return 0;
@@ -40,7 +71,7 @@ GLuint make_texture(const char *filename)
 		GL_TEXTURE_2D, 0,           /* target, level of detail */
 		GL_RGB8,                    /* internal format */
 		width, height, 0,           /* width, height, border */
-		GL_BGR, GL_UNSIGNED_BYTE,   /* external format, type */
+		format, GL_UNSIGNED_BYTE,   /* external format, type */
 		pixels                      /* pixels */
 		);
 	free(pixels);
