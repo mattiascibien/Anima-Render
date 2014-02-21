@@ -37,11 +37,12 @@ void make_sphere(std::vector<GLfloat> &vertices, std::vector<GLfloat> &normals, 
 		*n++ = z;
 	}
 
-	//TODO: triangulate
-	elements.resize(rings * sectors * 4);
+	elements.resize(rings * sectors * 6);
 	std::vector<GLushort>::iterator i = elements.begin();
 	for (r = 0; r < rings - 1; r++) for (s = 0; s < sectors - 1; s++) {
 		*i++ = r * sectors + s;
+		*i++ = r * sectors + (s + 1);
+		*i++ = (r + 1) * sectors + s;
 		*i++ = r * sectors + (s + 1);
 		*i++ = (r + 1) * sectors + (s + 1);
 		*i++ = (r + 1) * sectors + s;
