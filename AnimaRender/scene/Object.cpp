@@ -17,6 +17,7 @@ Object::Object()
 		textureFileNames[i] = "";
 		data.textures[i] = -1; //Non inizializzata
 	}
+	primitiveKind = "";
 	textured = false;
 }
 

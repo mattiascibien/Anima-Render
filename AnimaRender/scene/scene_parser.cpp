@@ -192,7 +192,6 @@ Transform parseTransform(ifstream &fstream, std::string curPath, int lightCount)
 	return transform;
 }
 
-
 Light parseLight(ifstream &fstream)
 {
 	static int currentLight = GL_LIGHT0;
@@ -253,17 +252,40 @@ Object parseObject(ifstream &fstream, std::string curPath)
 	Object object;
 	checkOpenBracket(fstream);
 
+	bool geometry = false;
+
 	while(!fstream.eof())
 	{
 		string key = getKeyword(fstream);
 
+		if (key.compare("primitive") == 0)
+		{
+			if (!geometry)
+			{
+				object.primitiveKind = readString(fstream);
+				geometry = true;
+			}
+			else
+			{
+				throw ParseException(PRIMITIVE_OR_GEOMETRY);
+			}
+		}
+
 		if(key.compare("geometry") == 0)
 		{
-			string filename = readString(fstream);
-			filename = curPath + filename;
-			if(object.loadGeometry(filename) != 1)
+			if (!geometry)
 			{
-				throw ParseException(FILE_MISSING);
+				string filename = readString(fstream);
+				filename = curPath + filename;
+				if (object.loadGeometry(filename) != 1)
+				{
+					throw ParseException(FILE_MISSING);
+				}
+				geometry = true;
+			}
+			else
+			{
+				throw ParseException(PRIMITIVE_OR_GEOMETRY);
 			}
 		} 
 		else if(key.compare("material") == 0)
