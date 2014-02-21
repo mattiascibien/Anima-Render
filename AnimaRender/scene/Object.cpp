@@ -205,7 +205,7 @@ int Object::makeResources()
 
 
 	data.element_buffer = make_buffer(
-		GL_ARRAY_BUFFER,
+		GL_ELEMENT_ARRAY_BUFFER,
 		&elements[0],
 		elements.size() * sizeof(GLushort)
 		);
