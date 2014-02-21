@@ -270,8 +270,7 @@ Object parseObject(ifstream &fstream, std::string curPath)
 				throw ParseException(PRIMITIVE_OR_GEOMETRY);
 			}
 		}
-
-		if(key.compare("geometry") == 0)
+		else if(key.compare("geometry") == 0)
 		{
 			if (!geometry)
 			{

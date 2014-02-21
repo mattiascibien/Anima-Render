@@ -24,8 +24,8 @@ public:
 
 	void render();
 	int makeResources();
-	bool textured;
 	string primitiveKind;
+	bool textured;
 private:
 	objLoader* objectLoader;
 	std::vector<GLfloat> vertices;

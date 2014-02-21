@@ -40,6 +40,12 @@
     <Filter Include="Header Files\texture-formats">
       <UniqueIdentifier>{1be75304-5c95-4ebb-a473-93e9035a307f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\primitives">
+      <UniqueIdentifier>{7cbed56b-fd7f-43fb-a55e-600e9a209a5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\primitives">
+      <UniqueIdentifier>{a3552339-a532-4ff6-9354-caaba898a875}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnimaRender.rc">
@@ -97,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="texture-formats\bmpreader.h">
       <Filter>Header Files\texture-formats</Filter>
+    </ClInclude>
+    <ClInclude Include="primitives\sphere.h">
+      <Filter>Header Files\primitives</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -210,6 +219,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\lodepng.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="primitives\sphere.cpp">
+      <Filter>Source Files\primitives</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

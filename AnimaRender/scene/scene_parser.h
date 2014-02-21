@@ -15,6 +15,7 @@
 #define EXCEED_LIGHTS "A Scene can have only up to 8 lights"
 #define EXCEED_TEXTURE_LIMITS "Texture index can only be between 0 and 7"
 #define PRIMITIVE_OR_GEOMETRY "Only pimitive or geometry can be specified for loading"
+#define PRIMITIVE_NOT_AVAILABLE "The primitive you have chosen is not available"
 
 class ParseException: public exception
 {

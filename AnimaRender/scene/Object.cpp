@@ -2,6 +2,7 @@
 
 #include "../utils/util.h"
 #include "../objloader/obj_parser.h"
+#include "../primitives/sphere.h"
 
 #include "Light.h"
 
@@ -17,8 +18,8 @@ Object::Object()
 		textureFileNames[i] = "";
 		data.textures[i] = -1; //Non inizializzata
 	}
-	primitiveKind = "";
 	textured = false;
+	primitiveKind = "";
 }
 
 //Ritorna se il file specificato è un obj valido
@@ -136,42 +137,53 @@ void Object::render()
 //Creiamo i buffer OpenGL e le texture leggendo i dati dell'obj
 int Object::makeResources()
 {
-	//Carichiamo 
-	int elementCounter = 0;
-	for(int fcount = 0; fcount < objectLoader->faceCount; fcount++)
+	if (primitiveKind == "")
 	{
-		obj_face *curFace = objectLoader->faceList[fcount];
 
-		for(int vcount = 0; vcount<3; vcount++)
+		//Carichiamo 
+		int elementCounter = 0;
+		for (int fcount = 0; fcount < objectLoader->faceCount; fcount++)
 		{
-			obj_vector *currentVertex = objectLoader->vertexList[curFace->vertex_index[vcount]];
-			for(int i = 0; i<3; i++) //Inseriamo i vertici nel buffer da bindare
-			{
-				vertices.push_back(currentVertex->e[i]);			
-			}
-			if(objectLoader->textureCount > 0)
-			{
-				obj_vector *currentTexture = objectLoader->textureList[curFace->texture_index[vcount]];
-				textured = true;
-				for(int i=0; i<2; i++) //Inserisce le coordinate di texture nel buffer che andremo a bindare successivamente
-				{
-					stCoordinates.push_back(currentTexture->e[i]); 
-				}
-			}
+			obj_face *curFace = objectLoader->faceList[fcount];
 
-			if(objectLoader->normalCount > 0)
+			for (int vcount = 0; vcount < 3; vcount++)
 			{
-				obj_vector *currentNormal = objectLoader->normalList[curFace->normal_index[vcount]];
-				for(int i=0; i<3; i++) //Inserisce le normali nel buffer
+				obj_vector *currentVertex = objectLoader->vertexList[curFace->vertex_index[vcount]];
+				for (int i = 0; i<3; i++) //Inseriamo i vertici nel buffer da bindare
 				{
-					normals.push_back(currentNormal->e[i]);
+					vertices.push_back(currentVertex->e[i]);
 				}
-			}
+				if (objectLoader->textureCount > 0)
+				{
+					obj_vector *currentTexture = objectLoader->textureList[curFace->texture_index[vcount]];
+					textured = true;
+					for (int i = 0; i<2; i++) //Inserisce le coordinate di texture nel buffer che andremo a bindare successivamente
+					{
+						stCoordinates.push_back(currentTexture->e[i]);
+					}
+				}
 
-			elements.push_back(elementCounter++); //Riempiamo l'element buffer con un ciclo per indicare che vogliamo caricare tutti i vertici
+				if (objectLoader->normalCount > 0)
+				{
+					obj_vector *currentNormal = objectLoader->normalList[curFace->normal_index[vcount]];
+					for (int i = 0; i < 3; i++) //Inserisce le normali nel buffer
+					{
+						normals.push_back(currentNormal->e[i]);
+					}
+				}
+
+				elements.push_back(elementCounter++); //Riempiamo l'element buffer con un ciclo per indicare che vogliamo caricare tutti i vertici
+			}
 		}
 	}
-
+	else
+	{
+		if (primitiveKind.compare("sphere") == 0)
+		{
+			make_sphere(vertices, normals, stCoordinates, elements);
+		}
+	}
+	
 
 	data.vertex_buffer = make_buffer(
 		GL_ARRAY_BUFFER,
@@ -211,8 +223,11 @@ int Object::makeResources()
 		}
 	}
 
-	//Objectloader non serve più in quanto abbiamo tutti i dati nei buffer dell'oggetto data.
-	delete objectLoader;
+	if (primitiveKind == "")
+	{
+		//Objectloader non serve più in quanto abbiamo tutti i dati nei buffer dell'oggetto data.
+		delete objectLoader;
+	}
 
 	string vertexShaderFileName = material + ".vert";
 	string fragmentShaderFileName = material + ".frag";
