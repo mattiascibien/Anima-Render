@@ -2,7 +2,9 @@
 
 #include "../utils/util.h"
 #include "../objloader/obj_parser.h"
+
 #include "../primitives/sphere.h"
+#include "../primitives/cube.h"
 
 #include "Light.h"
 
@@ -181,6 +183,10 @@ int Object::makeResources()
 		if (primitiveKind.compare("sphere") == 0)
 		{
 			make_sphere(vertices, normals, stCoordinates, elements);
+		}
+		else if (primitiveKind.compare("cube") == 0)
+		{
+			make_cube(vertices, normals, stCoordinates, elements);
 		}
 	}
 	

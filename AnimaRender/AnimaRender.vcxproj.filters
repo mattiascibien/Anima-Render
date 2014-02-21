@@ -107,6 +107,9 @@
     <ClInclude Include="primitives\sphere.h">
       <Filter>Header Files\primitives</Filter>
     </ClInclude>
+    <ClInclude Include="primitives\cube.h">
+      <Filter>Header Files\primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utils\util.cpp">
@@ -221,6 +224,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="primitives\sphere.cpp">
+      <Filter>Source Files\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="primitives\cube.cpp">
       <Filter>Source Files\primitives</Filter>
     </ClCompile>
   </ItemGroup>
