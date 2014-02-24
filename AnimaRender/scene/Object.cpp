@@ -112,9 +112,8 @@ void Object::render()
 	if(textured)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, data.st_buffer);
-		glClientActiveTexture(GL_TEXTURE0);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		//Indichiamo la texture da renderizzare.
+		//Texture coordinates
 		glTexCoordPointer(
 			2,
 			GL_FLOAT,
