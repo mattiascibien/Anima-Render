@@ -5,6 +5,7 @@
 
 #include "../primitives/sphere.h"
 #include "../primitives/cube.h"
+#include "../primitives/tesselated_sphere.h"
 
 #include "Light.h"
 
@@ -188,19 +189,28 @@ int Object::makeResources()
 			boost::split(values, primitiveKind, boost::is_any_of(" "));
 
 			int rings = 10;
-			int sectors = 10;
-
-			if (values.size() > 2)
-			{
-				rings = atoi(values.at(2).c_str());
-			}
+			int sectors_or_tess_level = 10;
+			string kind = "geo";
 
 			if (values.size() > 1)
 			{
-				sectors = atoi(values.at(1).c_str());
+				kind = values.at(1);
 			}
 
-			make_sphere(vertices, normals, stCoordinates, elements, rings, sectors);
+			if (values.size() > 3)
+			{
+				rings = atoi(values.at(3).c_str());
+			}
+
+			if (values.size() > 2)
+			{
+				sectors_or_tess_level = atoi(values.at(2).c_str());
+			}
+
+			if (kind == "geo")
+				make_sphere(vertices, normals, stCoordinates, elements, rings, sectors_or_tess_level);
+			else if (kind == "tes")
+				make_tesselated_sphere(vertices, normals, stCoordinates, elements, sectors_or_tess_level);
 		}
 		else if (primitiveKind.compare("cube") == 0)
 		{
