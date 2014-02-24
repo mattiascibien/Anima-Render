@@ -1,0 +1,12 @@
+language: cpp
+compiler: gcc
+
+intall:
+	- sudo apt-get -qq update
+	- sudo apt-get -qq install cmake libfreeglut3-dev libboost-all-dev
+	- sudo apt-get -qq install libreadonly-perl libautobox-core-perl libtry-tiny-perl libxml-treepp-perl
+
+script:
+	- cd ./AnimaRender/
+	- perl ./vcxproj2cmake AnimaRender.vcxproj Debug
+	- cmake .
