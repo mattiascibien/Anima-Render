@@ -110,6 +110,9 @@
     <ClInclude Include="primitives\cube.h">
       <Filter>Header Files\primitives</Filter>
     </ClInclude>
+    <ClInclude Include="primitives\tesselated_sphere.h">
+      <Filter>Header Files\primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utils\util.cpp">
@@ -227,6 +230,9 @@
       <Filter>Source Files\primitives</Filter>
     </ClCompile>
     <ClCompile Include="primitives\cube.cpp">
+      <Filter>Source Files\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="primitives\tesseleated_sphere.cpp">
       <Filter>Source Files\primitives</Filter>
     </ClCompile>
   </ItemGroup>
