@@ -92,6 +92,7 @@
     <ClInclude Include="objloader\obj_parser.h" />
     <ClInclude Include="objloader\string_extra.h" />
     <ClInclude Include="primitives\cube.h" />
+    <ClInclude Include="primitives\quad.h" />
     <ClInclude Include="primitives\tesselated_sphere.h" />
     <ClInclude Include="primitives\sphere.h" />
     <ClInclude Include="scene\Camera.h" />
@@ -113,6 +114,7 @@
     <ClCompile Include="objloader\obj_parser.cpp" />
     <ClCompile Include="objloader\string_extra.cpp" />
     <ClCompile Include="primitives\cube.cpp" />
+    <ClCompile Include="primitives\quad.cpp" />
     <ClCompile Include="primitives\tesseleated_sphere.cpp" />
     <ClCompile Include="primitives\sphere.cpp" />
     <ClCompile Include="scene\Camera.cpp" />

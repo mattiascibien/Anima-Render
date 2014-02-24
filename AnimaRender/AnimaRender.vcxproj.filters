@@ -113,6 +113,9 @@
     <ClInclude Include="primitives\tesselated_sphere.h">
       <Filter>Header Files\primitives</Filter>
     </ClInclude>
+    <ClInclude Include="primitives\quad.h">
+      <Filter>Header Files\primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utils\util.cpp">
@@ -233,6 +236,9 @@
       <Filter>Source Files\primitives</Filter>
     </ClCompile>
     <ClCompile Include="primitives\tesseleated_sphere.cpp">
+      <Filter>Source Files\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="primitives\quad.cpp">
       <Filter>Source Files\primitives</Filter>
     </ClCompile>
   </ItemGroup>

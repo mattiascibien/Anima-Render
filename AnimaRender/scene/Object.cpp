@@ -6,6 +6,7 @@
 #include "../primitives/sphere.h"
 #include "../primitives/cube.h"
 #include "../primitives/tesselated_sphere.h"
+#include "../primitives/quad.h"
 
 #include "Light.h"
 
@@ -215,6 +216,10 @@ int Object::makeResources()
 		else if (primitiveKind.compare("cube") == 0)
 		{
 			make_cube(vertices, normals, stCoordinates, elements);
+		}
+		else if (primitiveKind.compare("quad") == 0)
+		{
+			make_quad(vertices, normals, stCoordinates, elements);
 		}
 	}
 	
