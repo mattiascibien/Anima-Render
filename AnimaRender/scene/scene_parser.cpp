@@ -294,6 +294,14 @@ Object parseObject(ifstream &fstream, std::string curPath)
 			
 			object.setMaterial(filename);
 		}
+		else if (key.compare("textured") == 0)
+		{
+			string value = readString(fstream);
+			if (value.compare("true") == 0)
+			{
+				object.textured = true;
+			}
+		}
 		else if(key.compare("params") == 0)
 		{
 			string params = readString(fstream);
