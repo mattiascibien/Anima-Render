@@ -17,8 +17,8 @@ GLfloat quad_normals[] = {
 GLfloat quad_st[] = {
 	0.0f, 0.0f,
 	1.0f, 0.0f,
-	0.0f, 1.0f,
-	1.0f, 1.0f
+	1.0f, 1.0f,
+	0.0f, 1.0f
 };
 
 GLushort quad_elements[] = { 0, 1, 2, 0, 2, 3 };
