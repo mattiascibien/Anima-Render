@@ -6,10 +6,10 @@ configuration:
   - Debug
   - Release
 
+install:
+  cmd: nuget restore
+
 build:
   project: AnimaRender.sln
-
-before_build:
-  cmd: nuget restore
 
 test: off
