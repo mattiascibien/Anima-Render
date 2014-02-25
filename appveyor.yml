@@ -1,0 +1,14 @@
+os: Windows Server 2012
+
+clone_folder: c:\projects\anima-render
+
+configuration:
+  - Debug
+
+install:
+  cmd: nuget restore
+
+build:
+  project: AnimaRender.sln
+
+test: off
