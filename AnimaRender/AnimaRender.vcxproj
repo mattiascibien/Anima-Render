@@ -137,11 +137,11 @@
     <Import Project="..\packages\freeglut.2.8.1.15\build\native\freeglut.targets" Condition="Exists('..\packages\freeglut.2.8.1.15\build\native\freeglut.targets')" />
     <Import Project="..\packages\glew.redist.1.9.0.1\build\native\glew.redist.targets" Condition="Exists('..\packages\glew.redist.1.9.0.1\build\native\glew.redist.targets')" />
     <Import Project="..\packages\glew.1.9.0.1\build\native\glew.targets" Condition="Exists('..\packages\glew.1.9.0.1\build\native\glew.targets')" />
-    <Import Project="..\packages\boost.1.55.0.10\build\native\boost.targets" Condition="Exists('..\packages\boost.1.55.0.10\build\native\boost.targets')" />
-    <Import Project="..\packages\boost_program_options.1.55.0.16\build\native\boost_program_options.targets" Condition="Exists('..\packages\boost_program_options.1.55.0.16\build\native\boost_program_options.targets')" />
-    <Import Project="..\packages\boost_filesystem.1.55.0.16\build\native\boost_filesystem.targets" Condition="Exists('..\packages\boost_filesystem.1.55.0.16\build\native\boost_filesystem.targets')" />
-    <Import Project="..\packages\boost_system.1.55.0.16\build\native\boost_system.targets" Condition="Exists('..\packages\boost_system.1.55.0.16\build\native\boost_system.targets')" />
     <Import Project="..\packages\LodePNG.1.0.0\build\native\lodepng.targets" Condition="Exists('..\packages\LodePNG.1.0.0\build\native\lodepng.targets')" />
+    <Import Project="..\packages\boost.1.55.0.16\build\native\boost.targets" Condition="Exists('..\packages\boost.1.55.0.16\build\native\boost.targets')" />
+    <Import Project="..\packages\boost_filesystem-vc110.1.55.0.16\build\native\boost_filesystem-vc110.targets" Condition="Exists('..\packages\boost_filesystem-vc110.1.55.0.16\build\native\boost_filesystem-vc110.targets')" />
+    <Import Project="..\packages\boost_system-vc110.1.55.0.16\build\native\boost_system-vc110.targets" Condition="Exists('..\packages\boost_system-vc110.1.55.0.16\build\native\boost_system-vc110.targets')" />
+    <Import Project="..\packages\boost_program_options-vc110.1.55.0.16\build\native\boost_program_options-vc110.targets" Condition="Exists('..\packages\boost_program_options-vc110.1.55.0.16\build\native\boost_program_options-vc110.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -151,10 +151,10 @@
     <Error Condition="!Exists('..\packages\freeglut.2.8.1.15\build\native\freeglut.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\freeglut.2.8.1.15\build\native\freeglut.targets'))" />
     <Error Condition="!Exists('..\packages\glew.redist.1.9.0.1\build\native\glew.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glew.redist.1.9.0.1\build\native\glew.redist.targets'))" />
     <Error Condition="!Exists('..\packages\glew.1.9.0.1\build\native\glew.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glew.1.9.0.1\build\native\glew.targets'))" />
-    <Error Condition="!Exists('..\packages\boost.1.55.0.10\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.55.0.10\build\native\boost.targets'))" />
-    <Error Condition="!Exists('..\packages\boost_program_options.1.55.0.16\build\native\boost_program_options.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_program_options.1.55.0.16\build\native\boost_program_options.targets'))" />
     <Error Condition="!Exists('..\packages\LodePNG.1.0.0\build\native\lodepng.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\LodePNG.1.0.0\build\native\lodepng.targets'))" />
-    <Error Condition="!Exists('..\packages\boost_filesystem.1.55.0.16\build\native\boost_filesystem.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_filesystem.1.55.0.16\build\native\boost_filesystem.targets'))" />
-    <Error Condition="!Exists('..\packages\boost_system.1.55.0.16\build\native\boost_system.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_system.1.55.0.16\build\native\boost_system.targets'))" />
+    <Error Condition="!Exists('..\packages\boost.1.55.0.16\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.55.0.16\build\native\boost.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_filesystem-vc110.1.55.0.16\build\native\boost_filesystem-vc110.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_filesystem-vc110.1.55.0.16\build\native\boost_filesystem-vc110.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_system-vc110.1.55.0.16\build\native\boost_system-vc110.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_system-vc110.1.55.0.16\build\native\boost_system-vc110.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_program_options-vc110.1.55.0.16\build\native\boost_program_options-vc110.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_program_options-vc110.1.55.0.16\build\native\boost_program_options-vc110.targets'))" />
   </Target>
 </Project>
