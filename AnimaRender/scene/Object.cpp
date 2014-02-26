@@ -3,9 +3,16 @@
 #include "../utils/util.h"
 #include "../objloader/obj_parser.h"
 
+#include "../primitives/sphere.h"
+#include "../primitives/cube.h"
+#include "../primitives/tesselated_sphere.h"
+#include "../primitives/quad.h"
+
 #include "Light.h"
 
 #include <list>
+#include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>
 
 //I parametri di default vengono inizializzati nel costruttore
 Object::Object()
@@ -18,6 +25,7 @@ Object::Object()
 		data.textures[i] = -1; //Non inizializzata
 	}
 	textured = false;
+	primitiveKind = "";
 }
 
 //Ritorna se il file specificato è un obj valido
@@ -104,9 +112,8 @@ void Object::render()
 	if(textured)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, data.st_buffer);
-		glClientActiveTexture(GL_TEXTURE0);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		//Indichiamo la texture da renderizzare.
+		//Texture coordinates
 		glTexCoordPointer(
 			2,
 			GL_FLOAT,
@@ -135,42 +142,86 @@ void Object::render()
 //Creiamo i buffer OpenGL e le texture leggendo i dati dell'obj
 int Object::makeResources()
 {
-	//Carichiamo 
-	int elementCounter = 0;
-	for(int fcount = 0; fcount < objectLoader->faceCount; fcount++)
+	if (primitiveKind == "")
 	{
-		obj_face *curFace = objectLoader->faceList[fcount];
 
-		for(int vcount = 0; vcount<3; vcount++)
+		//Carichiamo 
+		int elementCounter = 0;
+		for (int fcount = 0; fcount < objectLoader->faceCount; fcount++)
 		{
-			obj_vector *currentVertex = objectLoader->vertexList[curFace->vertex_index[vcount]];
-			for(int i = 0; i<3; i++) //Inseriamo i vertici nel buffer da bindare
-			{
-				vertices.push_back(currentVertex->e[i]);			
-			}
-			if(objectLoader->textureCount > 0)
-			{
-				obj_vector *currentTexture = objectLoader->textureList[curFace->texture_index[vcount]];
-				textured = true;
-				for(int i=0; i<2; i++) //Inserisce le coordinate di texture nel buffer che andremo a bindare successivamente
-				{
-					stCoordinates.push_back(currentTexture->e[i]); 
-				}
-			}
+			obj_face *curFace = objectLoader->faceList[fcount];
 
-			if(objectLoader->normalCount > 0)
+			for (int vcount = 0; vcount < 3; vcount++)
 			{
-				obj_vector *currentNormal = objectLoader->normalList[curFace->normal_index[vcount]];
-				for(int i=0; i<3; i++) //Inserisce le normali nel buffer
+				obj_vector *currentVertex = objectLoader->vertexList[curFace->vertex_index[vcount]];
+				for (int i = 0; i<3; i++) //Inseriamo i vertici nel buffer da bindare
 				{
-					normals.push_back(currentNormal->e[i]);
+					vertices.push_back(currentVertex->e[i]);
 				}
-			}
+				if (objectLoader->textureCount > 0)
+				{
+					obj_vector *currentTexture = objectLoader->textureList[curFace->texture_index[vcount]];
+					textured = true;
+					for (int i = 0; i<2; i++) //Inserisce le coordinate di texture nel buffer che andremo a bindare successivamente
+					{
+						stCoordinates.push_back(currentTexture->e[i]);
+					}
+				}
 
-			elements.push_back(elementCounter++); //Riempiamo l'element buffer con un ciclo per indicare che vogliamo caricare tutti i vertici
+				if (objectLoader->normalCount > 0)
+				{
+					obj_vector *currentNormal = objectLoader->normalList[curFace->normal_index[vcount]];
+					for (int i = 0; i < 3; i++) //Inserisce le normali nel buffer
+					{
+						normals.push_back(currentNormal->e[i]);
+					}
+				}
+
+				elements.push_back(elementCounter++); //Riempiamo l'element buffer con un ciclo per indicare che vogliamo caricare tutti i vertici
+			}
 		}
 	}
+	else
+	{
+		if (primitiveKind.find("sphere") == 0)
+		{
+			std::vector<std::string> values;
+			boost::split(values, primitiveKind, boost::is_any_of(" "));
 
+			int rings = 10;
+			int sectors_or_tess_level = 10;
+			string kind = "geo";
+
+			if (values.size() > 1)
+			{
+				kind = values.at(1);
+			}
+
+			if (values.size() > 3)
+			{
+				rings = atoi(values.at(3).c_str());
+			}
+
+			if (values.size() > 2)
+			{
+				sectors_or_tess_level = atoi(values.at(2).c_str());
+			}
+
+			if (kind == "geo")
+				make_sphere(vertices, normals, stCoordinates, elements, rings, sectors_or_tess_level);
+			else if (kind == "tes")
+				make_tesselated_sphere(vertices, normals, stCoordinates, elements, sectors_or_tess_level);
+		}
+		else if (primitiveKind.compare("cube") == 0)
+		{
+			make_cube(vertices, normals, stCoordinates, elements);
+		}
+		else if (primitiveKind.compare("quad") == 0)
+		{
+			make_quad(vertices, normals, stCoordinates, elements);
+		}
+	}
+	
 
 	data.vertex_buffer = make_buffer(
 		GL_ARRAY_BUFFER,
@@ -186,7 +237,7 @@ int Object::makeResources()
 
 
 	data.element_buffer = make_buffer(
-		GL_ARRAY_BUFFER,
+		GL_ELEMENT_ARRAY_BUFFER,
 		&elements[0],
 		elements.size() * sizeof(GLushort)
 		);
@@ -210,8 +261,11 @@ int Object::makeResources()
 		}
 	}
 
-	//Objectloader non serve più in quanto abbiamo tutti i dati nei buffer dell'oggetto data.
-	delete objectLoader;
+	if (primitiveKind == "")
+	{
+		//Objectloader non serve più in quanto abbiamo tutti i dati nei buffer dell'oggetto data.
+		delete objectLoader;
+	}
 
 	string vertexShaderFileName = material + ".vert";
 	string fragmentShaderFileName = material + ".frag";

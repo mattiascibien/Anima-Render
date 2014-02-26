@@ -192,7 +192,6 @@ Transform parseTransform(ifstream &fstream, std::string curPath, int lightCount)
 	return transform;
 }
 
-
 Light parseLight(ifstream &fstream)
 {
 	static int currentLight = GL_LIGHT0;
@@ -253,17 +252,39 @@ Object parseObject(ifstream &fstream, std::string curPath)
 	Object object;
 	checkOpenBracket(fstream);
 
+	bool geometry = false;
+
 	while(!fstream.eof())
 	{
 		string key = getKeyword(fstream);
 
-		if(key.compare("geometry") == 0)
+		if (key.compare("primitive") == 0)
 		{
-			string filename = readString(fstream);
-			filename = curPath + filename;
-			if(object.loadGeometry(filename) != 1)
+			if (!geometry)
 			{
-				throw ParseException(FILE_MISSING);
+				object.primitiveKind = readString(fstream);
+				geometry = true;
+			}
+			else
+			{
+				throw ParseException(PRIMITIVE_OR_GEOMETRY);
+			}
+		}
+		else if(key.compare("geometry") == 0)
+		{
+			if (!geometry)
+			{
+				string filename = readString(fstream);
+				filename = curPath + filename;
+				if (object.loadGeometry(filename) != 1)
+				{
+					throw ParseException(FILE_MISSING);
+				}
+				geometry = true;
+			}
+			else
+			{
+				throw ParseException(PRIMITIVE_OR_GEOMETRY);
 			}
 		} 
 		else if(key.compare("material") == 0)
@@ -272,6 +293,14 @@ Object parseObject(ifstream &fstream, std::string curPath)
 			filename = curPath + filename;
 			
 			object.setMaterial(filename);
+		}
+		else if (key.compare("textured") == 0)
+		{
+			string value = readString(fstream);
+			if (value.compare("true") == 0)
+			{
+				object.textured = true;
+			}
 		}
 		else if(key.compare("params") == 0)
 		{

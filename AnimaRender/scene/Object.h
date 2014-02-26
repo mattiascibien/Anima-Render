@@ -24,6 +24,7 @@ public:
 
 	void render();
 	int makeResources();
+	string primitiveKind;
 	bool textured;
 private:
 	objLoader* objectLoader;

@@ -5,7 +5,6 @@
 #include "Transform.h"
 #include "Light.h"
 
-
 #include <fstream>
 #include <exception>
 
@@ -15,6 +14,8 @@
 #define FILE_MISSING "One file specified in the scene is missing"
 #define EXCEED_LIGHTS "A Scene can have only up to 8 lights"
 #define EXCEED_TEXTURE_LIMITS "Texture index can only be between 0 and 7"
+#define PRIMITIVE_OR_GEOMETRY "Only pimitive or geometry can be specified for loading"
+#define PRIMITIVE_NOT_AVAILABLE "The primitive you have chosen is not available"
 
 class ParseException: public exception
 {
@@ -23,7 +24,7 @@ public:
 	{
 		this->error = "ParseException";
 	}
-	ParseException(string error)
+	ParseException(std::string error)
 	{
 		this->error = error;
 	}
@@ -33,7 +34,7 @@ public:
 		return error.c_str();
 	}
 private:
-	string error;
+	std::string error;
 };
 
 Camera parseCamera(ifstream &fstream, std::string curDir);
