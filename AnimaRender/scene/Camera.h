@@ -15,11 +15,11 @@ class Camera
 {
 private:
 	
-	glm::fvec3 position;
-	glm::fvec3 direction;
-	glm::fvec3 up;
-	glm::fvec3 left;
-	glm::fvec3 yAxis;
+	glm::vec3 position;
+	glm::vec3 direction;
+	glm::vec3 up;
+	glm::vec3 left;
+	glm::vec3 yAxis;
 	float fovY;
 	glm::mat3x3 matrix;
 	
@@ -48,17 +48,17 @@ public:
 		screenEffect = "";
 	}
 	void initCamera();
-	void setPosition(glm::fvec3 pos);
+	void setPosition(glm::vec3 pos);
 	void setPosition(float x, float y, float z);
-	glm::fvec3 getPosition();
+	glm::vec3 getPosition();
 
-	void setDirection(glm::fvec3 dir);
+	void setDirection(glm::vec3 dir);
 	void setDirection(float x, float y, float z);
-	glm::fvec3 getDirection();
+	glm::vec3 getDirection();
 
-	void setUp(glm::fvec3 up);
+	void setUp(glm::vec3 up);
 	void setUp(float x, float y, float z);
-	glm::fvec3 getUp();
+	glm::vec3 getUp();
 
 	void setFovY(float fovy);
 	float getFovY();
@@ -82,9 +82,9 @@ public:
 
 	void setCameraRoll(int rolling);
 
-	void MatrixCreateFromAxisAngle(glm::fvec3 v, float angle);
+	void MatrixCreateFromAxisAngle(glm::vec3 v, float angle);
 
-	glm::fvec3 vectorMatrixTransform(glm::fvec3 v);
+	glm::vec3 vectorMatrixTransform(glm::vec3 v);
 
 	int make_resources();
 };

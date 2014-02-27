@@ -19,34 +19,34 @@ void Camera::initCamera()
 	PiOver4 = 0.7853982;
 }
 
-void Camera::setPosition(glm::fvec3 pos)
+void Camera::setPosition(glm::vec3 pos)
 {
 	position = pos;
 }
 
 void Camera::setPosition(float x, float y, float z)
 {
-	setPosition(glm::fvec3(x, y, z));
+	setPosition(glm::vec3(x, y, z));
 }
 
-void Camera::setDirection(glm::fvec3 dir)
+void Camera::setDirection(glm::vec3 dir)
 {
 	direction = dir;
 }
 
 void Camera::setDirection(float x, float y, float z)
 {
-	setDirection(glm::fvec3(x, y, z));
+	setDirection(glm::vec3(x, y, z));
 }
 
-void Camera::setUp(glm::fvec3 up)
+void Camera::setUp(glm::vec3 up)
 {
 	this->up= up;
 }
 
 void Camera::setUp(float x, float y, float z)
 {
-	setUp(glm::fvec3(x, y, z));
+	setUp(glm::vec3(x, y, z));
 }
 
 void Camera::setFovY(float fovy)
@@ -59,14 +59,14 @@ float Camera::getFovY()
 	return fovY;
 }
 
-glm::fvec3 Camera::getPosition()
+glm::vec3 Camera::getPosition()
 {
 	return position;
 }
 
-glm::fvec3 Camera::getDirection()
+glm::vec3 Camera::getDirection()
 {
-	glm::fvec3 newDir;
+	glm::vec3 newDir;
 
 	newDir.x = direction.x + position.x;
 	newDir.y = direction.y + position.y;
@@ -75,7 +75,7 @@ glm::fvec3 Camera::getDirection()
 	return newDir;
 }
 
-glm::fvec3 Camera::getUp()
+glm::vec3 Camera::getUp()
 {
 	return up;
 }
@@ -120,7 +120,7 @@ void Camera::cameraMove()
 {
 	//Calcola del vettore per il movimento laterale facendo il prodotto vettoriale tra
 	//il vettore direzione e quello up
-	glm::fvec3 left = glm::cross(up, direction);
+	glm::vec3 left = glm::cross(up, direction);
 
 	// Camera Roll
 	if(rollMove == -1)
@@ -202,7 +202,7 @@ void Camera::setCameraRoll(int rolling)
 }
 
 //Crea una matrice di rotazione su un vettore arbitrario
-void Camera::MatrixCreateFromAxisAngle(glm::fvec3 v, float angle)
+void Camera::MatrixCreateFromAxisAngle(glm::vec3 v, float angle)
 {
 	matrix[0][0] = cos(angle) + pow(v.x,2)*(1 - cos(angle));
 	matrix[1][0] = v.x*v.y*(1 - cos(angle)) - v.z*sin(angle);
@@ -218,9 +218,9 @@ void Camera::MatrixCreateFromAxisAngle(glm::fvec3 v, float angle)
 }
 
 //Trasforma un vettore in base alla matrice data
-glm::fvec3 Camera::vectorMatrixTransform(glm::fvec3 v)
+glm::vec3 Camera::vectorMatrixTransform(glm::vec3 v)
 {
-	glm::fvec3 transform;
+	glm::vec3 transform;
 
 	transform.x = matrix[0][0]*v.x + matrix[1][0]*v.y + matrix[2][0]*v.z;
 	transform.y = matrix[0][1]*v.x + matrix[1][1]*v.y + matrix[2][1]*v.z;
