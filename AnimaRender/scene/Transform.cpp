@@ -21,7 +21,7 @@ void Transform::setTranslation(glm::fvec3 trans)
 
 void Transform::setTranslation(float x, float y, float z)
 {
-	setTranslation(Vector(x, y, z));
+	setTranslation(glm::fvec3(x, y, z));
 }
 
 //Angolo e asse di rotazione
