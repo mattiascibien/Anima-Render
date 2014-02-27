@@ -4,10 +4,12 @@
 
 #include <gl\glew.h>
 
+#include <glm/glm.hpp>
+
 class Light
 {
 private:
-	Vector position;
+	glm::fvec4 position;
 	float irradianceR;
 	float irradianceG;
 	float irradianceB;
