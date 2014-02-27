@@ -5,16 +5,16 @@
 
 Transform::Transform()
 {
-	setTranslation(Vector(0.0f, 0.0f, 0.0f));
-	setRotation(0, Vector(0.0f, 0.0f, 0.0f));
-	setScale(Vector(1.0f, 1.0f, 1.0f));
+	setTranslation(glm::fvec3(0.0f, 0.0f, 0.0f));
+	setRotation(0, glm::fvec3(0.0f, 0.0f, 0.0f));
+	setScale(glm::fvec3(1.0f, 1.0f, 1.0f));
 	m_children = std::list<Transform>();
 	m_objects = std::list<Object>();
 	m_lights = std::list<Light>();
 }
 
 //Imposta il vettore di traslazione
-void Transform::setTranslation(Vector trans)
+void Transform::setTranslation(glm::fvec3 trans)
 {
 	m_tanslation = trans;
 }
@@ -25,7 +25,7 @@ void Transform::setTranslation(float x, float y, float z)
 }
 
 //Angolo e asse di rotazione
-void Transform::setRotation(float rotDeg, Vector axis)
+void Transform::setRotation(float rotDeg, glm::fvec3 axis)
 {
 	m_rotDeg = rotDeg;
 	m_rotAxis = axis;
@@ -33,18 +33,18 @@ void Transform::setRotation(float rotDeg, Vector axis)
 
 void Transform::setRotation(float rotDeg, float x, float y, float z)
 {
-	setRotation(rotDeg, Vector(x,y,z));	
+	setRotation(rotDeg, glm::fvec3(x, y, z));
 }
 
 //Imposta il vettore di scala
-void Transform::setScale(Vector scale)
+void Transform::setScale(glm::fvec3  scale)
 {
 	m_scale = scale;
 }
 
 void Transform::setScale(float x, float y, float z)
 {
-	setScale(Vector(x, y, z));
+	setScale(glm::fvec3(x, y, z));
 }
 
 //Aggiunge una trasformazione come figlia

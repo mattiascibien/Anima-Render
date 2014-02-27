@@ -6,15 +6,17 @@
 #include "Object.h"
 #include "Light.h"
 
+#include <glm/glm.hpp>
+
 class Transform
 {
 private:
-	Vector m_tanslation;
+	glm::fvec3 m_tanslation;
 	
 	float m_rotDeg;
-	Vector m_rotAxis;
+	glm::fvec3 m_rotAxis;
 
-	Vector m_scale;
+	glm::fvec3 m_scale;
 
 	std::list<Transform> m_children;
 	std::list<Light> m_lights;
@@ -22,13 +24,13 @@ private:
 
 public:
 	Transform();
-	void setTranslation(Vector trans);
+	void setTranslation(glm::fvec3 trans);
 	void setTranslation(float x, float y, float z);
 
-	void setRotation(float rotDeg, Vector axis);
+	void setRotation(float rotDeg, glm::fvec3 axis);
 	void setRotation(float rotDeg, float x, float y, float z);
 
-	void setScale(Vector scale);
+	void setScale(glm::fvec3 scale);
 	void setScale(float x, float y, float z);
 
 	void addChild(Transform trans);
