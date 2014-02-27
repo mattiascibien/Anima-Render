@@ -142,6 +142,7 @@
     <Import Project="..\packages\boost_filesystem-vc110.1.55.0.16\build\native\boost_filesystem-vc110.targets" Condition="Exists('..\packages\boost_filesystem-vc110.1.55.0.16\build\native\boost_filesystem-vc110.targets')" />
     <Import Project="..\packages\boost_system-vc110.1.55.0.16\build\native\boost_system-vc110.targets" Condition="Exists('..\packages\boost_system-vc110.1.55.0.16\build\native\boost_system-vc110.targets')" />
     <Import Project="..\packages\boost_program_options-vc110.1.55.0.16\build\native\boost_program_options-vc110.targets" Condition="Exists('..\packages\boost_program_options-vc110.1.55.0.16\build\native\boost_program_options-vc110.targets')" />
+    <Import Project="..\packages\glm.0.9.5.2\build\native\glm.targets" Condition="Exists('..\packages\glm.0.9.5.2\build\native\glm.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -156,5 +157,6 @@
     <Error Condition="!Exists('..\packages\boost_filesystem-vc110.1.55.0.16\build\native\boost_filesystem-vc110.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_filesystem-vc110.1.55.0.16\build\native\boost_filesystem-vc110.targets'))" />
     <Error Condition="!Exists('..\packages\boost_system-vc110.1.55.0.16\build\native\boost_system-vc110.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_system-vc110.1.55.0.16\build\native\boost_system-vc110.targets'))" />
     <Error Condition="!Exists('..\packages\boost_program_options-vc110.1.55.0.16\build\native\boost_program_options-vc110.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_program_options-vc110.1.55.0.16\build\native\boost_program_options-vc110.targets'))" />
+    <Error Condition="!Exists('..\packages\glm.0.9.5.2\build\native\glm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glm.0.9.5.2\build\native\glm.targets'))" />
   </Target>
 </Project>
