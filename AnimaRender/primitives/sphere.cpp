@@ -18,9 +18,9 @@ void make_sphere(std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &norma
 	std::vector<glm::vec3>::iterator n = normals.begin();
 	std::vector<glm::vec2>::iterator t = stCoordinates.begin();
 	for (r = 0; r < rings; r++) for (s = 0; s < sectors; s++) {
-		float const y = sin(-boost::math::double_constants::half_pi + boost::math::double_constants::pi * r * R);
-		float const x = cos(2 * boost::math::double_constants::pi * s * S) * sin(boost::math::double_constants::pi * r * R);
-		float const z = sin(2 * boost::math::double_constants::pi * s * S) * sin(boost::math::double_constants::pi * r * R);
+		float const y = sin(-boost::math::float_constants::half_pi + boost::math::float_constants::pi * r * R);
+		float const x = cos(2 * boost::math::float_constants::pi * s * S) * sin(boost::math::float_constants::pi * r * R);
+		float const z = sin(2 * boost::math::float_constants::pi * s * S) * sin(boost::math::float_constants::pi * r * R);
 
 		*t++ = glm::vec2(s*S, r*R);
 
@@ -32,11 +32,11 @@ void make_sphere(std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &norma
 	elements.resize(rings * sectors * 6);
 	std::vector<GLushort>::iterator i = elements.begin();
 	for (r = 0; r < rings - 1; r++) for (s = 0; s < sectors - 1; s++) {
-		*i++ = r * sectors + s;
-		*i++ = r * sectors + (s + 1);
-		*i++ = (r + 1) * sectors + (s + 1);
-		*i++ = r * sectors + s;
-		*i++ = (r + 1) * sectors + (s + 1);
-		*i++ = (r + 1) * sectors + s;
+		*i++ = r * sectors + s; //0
+		*i++ = r * sectors + (s + 1); //1
+		*i++ = (r + 1) * sectors + (s + 1); //2
+		*i++ = r * sectors + s; //0
+		*i++ = (r + 1) * sectors + (s + 1); //2
+		*i++ = (r + 1) * sectors + s; //3
 	}
 }

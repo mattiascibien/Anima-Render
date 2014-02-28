@@ -123,7 +123,7 @@ void Object::render()
 	}
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data.element_buffer);
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 	glDrawElements(
 		GL_TRIANGLES,
@@ -200,8 +200,8 @@ int Object::makeResources()
 
 			if (kind == "geo")
 				make_sphere(vertices, normals, stCoordinates, elements, rings, sectors_or_tess_level);
-			/*else if (kind == "tes")
-				make_tesselated_sphere(vertices, normals, stCoordinates, elements, sectors_or_tess_level);*/
+			else if (kind == "tes")
+				make_tesselated_sphere(vertices, normals, stCoordinates, elements, sectors_or_tess_level);
 		}
 		else if (primitiveKind.compare("cube") == 0)
 		{
