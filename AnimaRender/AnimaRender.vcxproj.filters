@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\data">
-      <UniqueIdentifier>{1b59ef47-4873-46da-a43d-1846548bd8be}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\objloader">
       <UniqueIdentifier>{1621820e-28e6-4cb0-8a0e-6a5f67e905ba}</UniqueIdentifier>
     </Filter>
@@ -53,12 +50,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="data\Color.h">
-      <Filter>Header Files\data</Filter>
-    </ClInclude>
-    <ClInclude Include="data\Vector.h">
-      <Filter>Header Files\data</Filter>
-    </ClInclude>
     <ClInclude Include="utils\util.h">
       <Filter>Header Files\utils</Filter>
     </ClInclude>

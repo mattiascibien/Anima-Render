@@ -84,8 +84,6 @@
     <ResourceCompile Include="AnimaRender.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="data\Color.h" />
-    <ClInclude Include="data\Vector.h" />
     <ClInclude Include="glfuncs.h" />
     <ClInclude Include="objloader\list.h" />
     <ClInclude Include="objloader\objLoader.h" />
