@@ -52,9 +52,9 @@ void Object::addParameter(string key, float value)
 	floatParameters.insert(pair<string,int>(key, value));
 }
 
-void Object::addParameter(string key, Vector value)
+void Object::addParameter(string key, glm::vec4 value)
 {
-	vectorParameters.insert(pair<string,Vector>(key, value));
+	vectorParameters.insert(pair<string,glm::vec4>(key, value));
 }
 
 //Effettivo rendering dell'oggetto
@@ -71,7 +71,7 @@ void Object::render()
 	}
 	
 	//Uniform vec4
-	for(std::map<std::string, Vector>::iterator it= vectorParameters.begin(); it != vectorParameters.end(); it++)
+	for(std::map<std::string, glm::vec4>::iterator it= vectorParameters.begin(); it != vectorParameters.end(); it++)
 	{
 		string name = it->first;
 
@@ -294,7 +294,7 @@ int Object::makeResources()
 		uniformLocations.insert(pair<string,GLint>(name, location));
 	}
 	
-	for(std::map<std::string, Vector>::iterator it= vectorParameters.begin(); it != vectorParameters.end(); it++)
+	for(std::map<std::string, glm::vec4>::iterator it= vectorParameters.begin(); it != vectorParameters.end(); it++)
 	{
 		const char* name = it->first.c_str();
 		GLint location = glGetUniformLocation(shaderData.program, name);
