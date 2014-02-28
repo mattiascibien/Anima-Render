@@ -97,7 +97,7 @@ void Object::render()
 	glVertexPointer(
 		3,
 		GL_FLOAT,
-		sizeof(GLfloat)*3,
+		0,
 		(void*)0
 		);
 
@@ -117,7 +117,7 @@ void Object::render()
 		glTexCoordPointer(
 			2,
 			GL_FLOAT,
-			sizeof(GLfloat)*2,
+			0,
 			(void*)0
 			);
 	}
@@ -154,27 +154,18 @@ int Object::makeResources()
 			for (int vcount = 0; vcount < 3; vcount++)
 			{
 				obj_vector *currentVertex = objectLoader->vertexList[curFace->vertex_index[vcount]];
-				for (int i = 0; i<3; i++) //Inseriamo i vertici nel buffer da bindare
-				{
-					vertices.push_back(currentVertex->e[i]);
-				}
+				vertices.push_back(glm::vec3(currentVertex->e[0], currentVertex->e[1], currentVertex->e[2]));
 				if (objectLoader->textureCount > 0)
 				{
 					obj_vector *currentTexture = objectLoader->textureList[curFace->texture_index[vcount]];
 					textured = true;
-					for (int i = 0; i<2; i++) //Inserisce le coordinate di texture nel buffer che andremo a bindare successivamente
-					{
-						stCoordinates.push_back(currentTexture->e[i]);
-					}
+					stCoordinates.push_back(glm::vec2(currentTexture->e[0], currentTexture->e[1]));
 				}
 
 				if (objectLoader->normalCount > 0)
 				{
 					obj_vector *currentNormal = objectLoader->normalList[curFace->normal_index[vcount]];
-					for (int i = 0; i < 3; i++) //Inserisce le normali nel buffer
-					{
-						normals.push_back(currentNormal->e[i]);
-					}
+					normals.push_back(glm::vec3(currentNormal->e[0], currentNormal->e[1], currentNormal->e[2]));
 				}
 
 				elements.push_back(elementCounter++); //Riempiamo l'element buffer con un ciclo per indicare che vogliamo caricare tutti i vertici
@@ -183,7 +174,7 @@ int Object::makeResources()
 	}
 	else
 	{
-		if (primitiveKind.find("sphere") == 0)
+		/*if (primitiveKind.find("sphere") == 0)
 		{
 			std::vector<std::string> values;
 			boost::split(values, primitiveKind, boost::is_any_of(" "));
@@ -219,20 +210,20 @@ int Object::makeResources()
 		else if (primitiveKind.compare("quad") == 0)
 		{
 			make_quad(vertices, normals, stCoordinates, elements);
-		}
+		}*/
 	}
 	
 
 	data.vertex_buffer = make_buffer(
 		GL_ARRAY_BUFFER,
 		&vertices[0],
-		vertices.size() * sizeof(GLfloat)
+		vertices.size() * sizeof(glm::vec3)
 		);
 
 	data.normal_buffer = make_buffer(
 		GL_ARRAY_BUFFER,
 		&normals[0],
-		normals.size() * sizeof(GLfloat)
+		normals.size() * sizeof(glm::vec3)
 		);
 
 
@@ -247,7 +238,7 @@ int Object::makeResources()
 		data.st_buffer = make_buffer(
 			GL_ARRAY_BUFFER,
 			&stCoordinates[0],
-			stCoordinates.size() * sizeof(GLfloat)
+			stCoordinates.size() * sizeof(glm::vec2)
 			);
 
 		for(int i = 0; i < 8; i++)
