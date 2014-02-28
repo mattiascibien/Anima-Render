@@ -14,5 +14,5 @@ build:
 test: off
 
 artifacts:
-  - path: Debug
+  - path: .\Debug
     name: AnimaRender-latest-x86
