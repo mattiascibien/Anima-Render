@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../data/Vector.h"
+
 
 #include <gl\glew.h>
 

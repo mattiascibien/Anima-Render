@@ -2,7 +2,7 @@
 
 #include <list>
 
-#include "../data/Vector.h"
+
 #include "Object.h"
 #include "Light.h"
 
