@@ -1,16 +1,16 @@
 #include "cube.h"
 
-static const GLfloat box_vertex_buffer_data[] = {
+static const glm::vec3 box_vertex_buffer_data[] = {
 	// front
-	-1.0, -1.0, 1.0,
-	1.0, -1.0, 1.0,
-	1.0, 1.0, 1.0,
-	-1.0, 1.0, 1.0,
+	glm::vec3(- 1.0f, -1.0f, 1.0f),
+	glm::vec3(1.0f, -1.0f, 1.0f),
+	glm::vec3(1.0f, 1.0f, 1.0f),
+	glm::vec3(-1.0f, 1.0f, 1.0f),
 	// back
-	-1.0, -1.0, -1.0,
-	1.0, -1.0, -1.0,
-	1.0, 1.0, -1.0,
-	-1.0, 1.0, -1.0,
+	glm::vec3(-1.0f, -1.0f, -1.0f),
+	glm::vec3(1.0f, -1.0f, -1.0f),
+	glm::vec3(1.0f, 1.0f, -1.0f),
+	glm::vec3(-1.0f, 1.0f, -1.0f)
 };
 
 static const GLuint box_element_buffer_data[] = {
@@ -34,22 +34,22 @@ static const GLuint box_element_buffer_data[] = {
 	6, 2, 1,
 };
 
-static const GLfloat box_st_buffer_data[] = {
-	1, 0,
-	1, 1,
-	0, 1,
-	0, 0,
-	1, 0,
-	1, 1,
-	0, 1,
-	0, 0,
+static const glm::vec2 box_st_buffer_data[] = {
+	glm::vec2(1.0f, 0.0f),
+	glm::vec2(1.0f, 1.0f),
+	glm::vec2(0.0f, 1.0f),
+	glm::vec2(0.0f, 0.0f),
+	glm::vec2(1.0f, 0.0f),
+	glm::vec2(1.0f, 1.0f),
+	glm::vec2(0.0f, 1.0f),
+	glm::vec2(0.0f, 0.0f),
 };
 
 
 
-void make_cube(std::vector<GLfloat> &vertices, std::vector<GLfloat> &normals, std::vector<GLfloat> &stCoordinates, std::vector<GLushort> &elements)
+void make_cube(std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals, std::vector<glm::vec2> &stCoordinates, std::vector<GLushort> &elements)
 {
-	for (size_t i = 0; i < 24; i++)
+	for (size_t i = 0; i < 8; i++)
 	{
 		vertices.push_back(box_vertex_buffer_data[i]);
 		normals.push_back(box_vertex_buffer_data[i]);
@@ -61,7 +61,7 @@ void make_cube(std::vector<GLfloat> &vertices, std::vector<GLfloat> &normals, st
 		elements.push_back(box_element_buffer_data[i]);
 	}
 
-	for (size_t i = 0; i < 16; i++)
+	for (size_t i = 0; i < 8; i++)
 	{
 		stCoordinates.push_back(box_st_buffer_data[i]);
 	}

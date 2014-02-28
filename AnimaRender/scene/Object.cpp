@@ -174,7 +174,7 @@ int Object::makeResources()
 	}
 	else
 	{
-		/*if (primitiveKind.find("sphere") == 0)
+		if (primitiveKind.find("sphere") == 0)
 		{
 			std::vector<std::string> values;
 			boost::split(values, primitiveKind, boost::is_any_of(" "));
@@ -200,8 +200,8 @@ int Object::makeResources()
 
 			if (kind == "geo")
 				make_sphere(vertices, normals, stCoordinates, elements, rings, sectors_or_tess_level);
-			else if (kind == "tes")
-				make_tesselated_sphere(vertices, normals, stCoordinates, elements, sectors_or_tess_level);
+			/*else if (kind == "tes")
+				make_tesselated_sphere(vertices, normals, stCoordinates, elements, sectors_or_tess_level);*/
 		}
 		else if (primitiveKind.compare("cube") == 0)
 		{
@@ -210,7 +210,7 @@ int Object::makeResources()
 		else if (primitiveKind.compare("quad") == 0)
 		{
 			make_quad(vertices, normals, stCoordinates, elements);
-		}*/
+		}
 	}
 	
 
