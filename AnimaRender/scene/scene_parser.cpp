@@ -231,7 +231,7 @@ Light parseLight(ifstream &fstream)
 	return light;
 }
 
-bool tryGetVector(Vector &vect, string value)
+bool tryGetVector(glm::vec4 &vect, string value)
 {
 	std::vector<std::string> numbers;
 	boost::split(numbers, value, boost::is_any_of(","));
@@ -311,7 +311,7 @@ Object parseObject(ifstream &fstream, std::string curPath)
 			for(unsigned int i=0; i<keyValuePairs.size(); ++i)
 			{
 				//Un po' hackereccia ma funziona.
-				Vector value;
+				glm::vec4 value;
 				std::vector<std::string> currentKeyValuePair;
 				boost::split(currentKeyValuePair, keyValuePairs[i], boost::is_any_of("="));
 				if(tryGetVector(value, currentKeyValuePair[1])) //E' un vettore

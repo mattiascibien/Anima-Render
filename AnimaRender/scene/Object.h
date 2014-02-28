@@ -8,7 +8,9 @@
 
 #include <vector>
 
-#include "../data/Vector.h"
+
+
+#include <glm/glm.hpp>
 
 using namespace std;
 
@@ -20,7 +22,7 @@ public:
 	void setTexture(int id, string name, string filename);
 	void setMaterial(string filename);
 	void addParameter(string key, float value);
-	void addParameter(string key, Vector value);
+	void addParameter(string key, glm::vec4 value);
 
 	void render();
 	int makeResources();
@@ -38,7 +40,7 @@ private:
 	std::string textureFileNames[8];
 
 	std::map<std::string, float> floatParameters;
-	std::map<std::string, Vector> vectorParameters;
+	std::map<std::string, glm::vec4> vectorParameters;
 
 	std::map<std::string, GLint> uniformLocations;
 

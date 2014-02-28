@@ -2,6 +2,8 @@
 
 #include <cmath>
 
+#include <glm/gtx/transform.hpp>
+
 //Inizializzazione della camera
 void Camera::initCamera()
 {
@@ -19,34 +21,34 @@ void Camera::initCamera()
 	PiOver4 = 0.7853982;
 }
 
-void Camera::setPosition(Vector pos)
+void Camera::setPosition(glm::vec3 pos)
 {
 	position = pos;
 }
 
 void Camera::setPosition(float x, float y, float z)
 {
-	setPosition(Vector(x, y, z));
+	setPosition(glm::vec3(x, y, z));
 }
 
-void Camera::setDirection(Vector dir)
+void Camera::setDirection(glm::vec3 dir)
 {
 	direction = dir;
 }
 
 void Camera::setDirection(float x, float y, float z)
 {
-	setDirection(Vector(x, y, z));
+	setDirection(glm::vec3(x, y, z));
 }
 
-void Camera::setUp(Vector up)
+void Camera::setUp(glm::vec3 up)
 {
 	this->up= up;
 }
 
 void Camera::setUp(float x, float y, float z)
 {
-	setUp(Vector(x, y, z));
+	setUp(glm::vec3(x, y, z));
 }
 
 void Camera::setFovY(float fovy)
@@ -59,14 +61,14 @@ float Camera::getFovY()
 	return fovY;
 }
 
-Vector Camera::getPosition()
+glm::vec3 Camera::getPosition()
 {
 	return position;
 }
 
-Vector Camera::getDirection()
+glm::vec3 Camera::getDirection()
 {
-	Vector newDir;
+	glm::vec3 newDir;
 
 	newDir.x = direction.x + position.x;
 	newDir.y = direction.y + position.y;
@@ -75,7 +77,7 @@ Vector Camera::getDirection()
 	return newDir;
 }
 
-Vector Camera::getUp()
+glm::vec3 Camera::getUp()
 {
 	return up;
 }
@@ -107,7 +109,7 @@ void Camera::mouseMove(int x, int y)
 		setDirection(vectorMatrixTransform(direction));
 
 		//Camera Pitch
-		MatrixCreateFromAxisAngle(Cross(up,direction), (PiOver4/100)*(y - yOrigin));
+		MatrixCreateFromAxisAngle(glm::cross(up,direction), (PiOver4/100)*(y - yOrigin));
 		setDirection(vectorMatrixTransform(direction));
 		setUp(vectorMatrixTransform(up));
 
@@ -120,7 +122,7 @@ void Camera::cameraMove()
 {
 	//Calcola del vettore per il movimento laterale facendo il prodotto vettoriale tra
 	//il vettore direzione e quello up
-	Vector left = Cross(up,direction);
+	glm::vec3 left = glm::cross(up, direction);
 
 	// Camera Roll
 	if(rollMove == -1)
@@ -202,43 +204,15 @@ void Camera::setCameraRoll(int rolling)
 }
 
 //Crea una matrice di rotazione su un vettore arbitrario
-void Camera::MatrixCreateFromAxisAngle(Vector v, float angle)
+void Camera::MatrixCreateFromAxisAngle(glm::vec3 v, float angle)
 {
-	matrix[0][0] = cos(angle) + pow(v.x,2)*(1 - cos(angle));
-	matrix[1][0] = v.x*v.y*(1 - cos(angle)) - v.z*sin(angle);
-	matrix[2][0] = v.x*v.z*(1 - cos(angle)) + v.y*sin(angle);
-
-	matrix[0][1] = v.x*v.y*(1 - cos(angle)) + v.z*sin(angle);
-	matrix[1][1] = cos(angle) + pow(v.y,2)*(1 - cos(angle));
-	matrix[2][1] = v.y*v.z*(1 - cos(angle)) - v.x*sin(angle);
-
-	matrix[0][2] = v.x*v.z*(1 - cos(angle)) - v.y*sin(angle);
-	matrix[1][2] = v.y*v.z*(1 - cos(angle)) + v.x*sin(angle);
-	matrix[2][2] = cos(angle) + pow(v.z,2)*(1 - cos(angle));
+	matrix = glm::mat3x3(glm::rotate(glm::degrees(angle), v));
 }
 
 //Trasforma un vettore in base alla matrice data
-Vector Camera::vectorMatrixTransform(Vector v)
+glm::vec3 Camera::vectorMatrixTransform(glm::vec3 v)
 {
-	Vector transform;
-
-	transform.x = matrix[0][0]*v.x + matrix[1][0]*v.y + matrix[2][0]*v.z;
-	transform.y = matrix[0][1]*v.x + matrix[1][1]*v.y + matrix[2][1]*v.z;
-	transform.z = matrix[0][2]*v.x + matrix[1][2]*v.y + matrix[2][2]*v.z;
-
-	return transform;
-}
-
-//Calcola il prodotto vettoriale di due vettori
-Vector Camera::Cross(Vector left, Vector right)
-{
-	Vector cross;
-
-	cross.x = left.y * right.z - left.z * right.y;
-	cross.y = left.z * right.x - left.x * right.z;
-	cross.z = left.x * right.y - left.y * right.x;
-
-	return cross;
+	return matrix * v;
 }
 
 void Camera::setScreenEffect(std::string fileName)
