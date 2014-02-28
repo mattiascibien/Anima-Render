@@ -206,32 +206,13 @@ void Camera::setCameraRoll(int rolling)
 //Crea una matrice di rotazione su un vettore arbitrario
 void Camera::MatrixCreateFromAxisAngle(glm::vec3 v, float angle)
 {
-	matrix = glm::mat3x3(glm::rotate(angle, v));
-	//matrix[0][0] = cos(angle) + pow(v.x,2)*(1 - cos(angle));
-	//matrix[1][0] = v.x*v.y*(1 - cos(angle)) - v.z*sin(angle);
-	//matrix[2][0] = v.x*v.z*(1 - cos(angle)) + v.y*sin(angle);
-
-	//matrix[0][1] = v.x*v.y*(1 - cos(angle)) + v.z*sin(angle);
-	//matrix[1][1] = cos(angle) + pow(v.y,2)*(1 - cos(angle));
-	//matrix[2][1] = v.y*v.z*(1 - cos(angle)) - v.x*sin(angle);
-
-	//matrix[0][2] = v.x*v.z*(1 - cos(angle)) - v.y*sin(angle);
-	//matrix[1][2] = v.y*v.z*(1 - cos(angle)) + v.x*sin(angle);
-	//matrix[2][2] = cos(angle) + pow(v.z,2)*(1 - cos(angle));
+	matrix = glm::mat3x3(glm::rotate(glm::degrees(angle), v));
 }
 
 //Trasforma un vettore in base alla matrice data
 glm::vec3 Camera::vectorMatrixTransform(glm::vec3 v)
 {
-	glm::vec3 transform;
-
-	transform = matrix * v;
-
-	//transform.x = matrix[0][0]*v.x + matrix[1][0]*v.y + matrix[2][0]*v.z;
-	//transform.y = matrix[0][1]*v.x + matrix[1][1]*v.y + matrix[2][1]*v.z;
-	//transform.z = matrix[0][2]*v.x + matrix[1][2]*v.y + matrix[2][2]*v.z;
-
-	return transform;
+	return matrix * v;
 }
 
 void Camera::setScreenEffect(std::string fileName)
