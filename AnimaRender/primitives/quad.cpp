@@ -25,9 +25,10 @@ void make_quad(std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals
 	for (size_t i = 0; i < 4; i++)
 	{
 		vertices.push_back(quad_vertices[i]);
+		normals.push_back(quad_normals[0]);
 	}
 		
-	normals.push_back(quad_normals[0]);
+
 
 	for (size_t i = 0; i < 4; i++)
 	{
