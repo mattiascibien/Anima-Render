@@ -30,10 +30,10 @@ public:
 	bool textured;
 private:
 	objLoader* objectLoader;
-	std::vector<GLfloat> vertices;
+	std::vector<glm::vec3> vertices;
 	std::vector<GLushort> elements;
-	std::vector<GLfloat> stCoordinates;
-	std::vector<GLfloat> normals;
+	std::vector<glm::vec2> stCoordinates;
+	std::vector<glm::vec3> normals;
 
 	std::string material;
 	std::string textureNames[8];

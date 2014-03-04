@@ -2,6 +2,7 @@
 
 #include <cmath>
 
+#define GLM_FORCE_RADIANS
 #include <glm/gtx/transform.hpp>
 
 //Inizializzazione della camera
@@ -206,7 +207,7 @@ void Camera::setCameraRoll(int rolling)
 //Crea una matrice di rotazione su un vettore arbitrario
 void Camera::MatrixCreateFromAxisAngle(glm::vec3 v, float angle)
 {
-	matrix = glm::mat3x3(glm::rotate(glm::degrees(angle), v));
+	matrix = glm::mat3x3(glm::rotate(angle, v));
 }
 
 //Trasforma un vettore in base alla matrice data

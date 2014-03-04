@@ -3,7 +3,7 @@
 
 #include <boost\math\constants\constants.hpp>
 
-void make_sphere(std::vector<GLfloat> &vertices, std::vector<GLfloat> &normals, std::vector<GLfloat> &stCoordinates, std::vector<GLushort> &elements, int rings, int sectors)
+void make_sphere(std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &normals, std::vector<glm::vec2> &stCoordinates, std::vector<GLushort> &elements, int rings, int sectors)
 {
 	int radius = 1;
 
@@ -11,37 +11,32 @@ void make_sphere(std::vector<GLfloat> &vertices, std::vector<GLfloat> &normals, 
 	float const S = 1. / (float) (sectors - 1);
 	int r, s;
 
-	vertices.resize(rings * sectors * 3);
-	normals.resize(rings * sectors * 3);
-	stCoordinates.resize(rings * sectors * 2);
-	std::vector<GLfloat>::iterator v = vertices.begin();
-	std::vector<GLfloat>::iterator n = normals.begin();
-	std::vector<GLfloat>::iterator t = stCoordinates.begin();
+	vertices.resize(rings * sectors);
+	normals.resize(rings * sectors);
+	stCoordinates.resize(rings * sectors);
+	std::vector<glm::vec3>::iterator v = vertices.begin();
+	std::vector<glm::vec3>::iterator n = normals.begin();
+	std::vector<glm::vec2>::iterator t = stCoordinates.begin();
 	for (r = 0; r < rings; r++) for (s = 0; s < sectors; s++) {
-		float const y = sin(-boost::math::double_constants::half_pi + boost::math::double_constants::pi * r * R);
-		float const x = cos(2 * boost::math::double_constants::pi * s * S) * sin(boost::math::double_constants::pi * r * R);
-		float const z = sin(2 * boost::math::double_constants::pi * s * S) * sin(boost::math::double_constants::pi * r * R);
+		float const y = sin(-boost::math::float_constants::half_pi + boost::math::float_constants::pi * r * R);
+		float const x = cos(2 * boost::math::float_constants::pi * s * S) * sin(boost::math::float_constants::pi * r * R);
+		float const z = sin(2 * boost::math::float_constants::pi * s * S) * sin(boost::math::float_constants::pi * r * R);
 
-		*t++ = s*S;
-		*t++ = r*R;
+		*t++ = glm::vec2(s*S, r*R);
 
-		*v++ = x * radius;
-		*v++ = y * radius;
-		*v++ = z * radius;
+		*v++ = glm::vec3(x * radius, y * radius, z * radius);
 
-		*n++ = x;
-		*n++ = y;
-		*n++ = z;
+		*n++ = glm::vec3(x, y, z);
 	}
 
 	elements.resize(rings * sectors * 6);
 	std::vector<GLushort>::iterator i = elements.begin();
 	for (r = 0; r < rings - 1; r++) for (s = 0; s < sectors - 1; s++) {
-		*i++ = r * sectors + s;
-		*i++ = r * sectors + (s + 1);
-		*i++ = (r + 1) * sectors + (s + 1);
-		*i++ = r * sectors + s;
-		*i++ = (r + 1) * sectors + (s + 1);
-		*i++ = (r + 1) * sectors + s;
+		*i++ = r * sectors + s; //0		
+		*i++ = (r + 1) * sectors + (s + 1); //2
+		*i++ = r * sectors + (s + 1); //1
+		*i++ = r * sectors + s; //0
+		*i++ = (r + 1) * sectors + s; //3
+		*i++ = (r + 1) * sectors + (s + 1); //2
 	}
 }
