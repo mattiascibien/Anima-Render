@@ -123,7 +123,7 @@ void Object::render()
 	}
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data.element_buffer);
-	//glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 	glDrawElements(
 		GL_TRIANGLES,

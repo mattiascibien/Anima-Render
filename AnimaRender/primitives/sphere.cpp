@@ -32,11 +32,11 @@ void make_sphere(std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &norma
 	elements.resize(rings * sectors * 6);
 	std::vector<GLushort>::iterator i = elements.begin();
 	for (r = 0; r < rings - 1; r++) for (s = 0; s < sectors - 1; s++) {
-		*i++ = r * sectors + s; //0
+		*i++ = r * sectors + s; //0		
+		*i++ = (r + 1) * sectors + (s + 1); //2
 		*i++ = r * sectors + (s + 1); //1
-		*i++ = (r + 1) * sectors + (s + 1); //2
 		*i++ = r * sectors + s; //0
-		*i++ = (r + 1) * sectors + (s + 1); //2
 		*i++ = (r + 1) * sectors + s; //3
+		*i++ = (r + 1) * sectors + (s + 1); //2
 	}
 }
