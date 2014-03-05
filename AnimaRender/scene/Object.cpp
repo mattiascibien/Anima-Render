@@ -13,6 +13,7 @@
 #include <list>
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/filesystem.hpp>
 
 //I parametri di default vengono inizializzati nel costruttore
 Object::Object()
@@ -258,8 +259,8 @@ int Object::makeResources()
 		delete objectLoader;
 	}
 
-	string vertexShaderFileName = material + ".vert";
-	string fragmentShaderFileName = material + ".frag";
+	string vertexShaderFileName = boost::filesystem::canonical(material + ".vert").string();
+	string fragmentShaderFileName = boost::filesystem::canonical(material + ".frag").string();
 
 	shaderData.vertex_shader = make_shader(GL_VERTEX_SHADER,vertexShaderFileName.c_str());
 	if(shaderData.vertex_shader == 0)

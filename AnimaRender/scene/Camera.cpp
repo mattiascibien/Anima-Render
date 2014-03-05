@@ -5,6 +5,8 @@
 #define GLM_FORCE_RADIANS
 #include <glm/gtx/transform.hpp>
 
+#include <boost/filesystem.hpp>
+
 //Inizializzazione della camera
 void Camera::initCamera()
 {
@@ -218,7 +220,7 @@ glm::vec3 Camera::vectorMatrixTransform(glm::vec3 v)
 
 void Camera::setScreenEffect(std::string fileName)
 {
-	this->screenEffect = fileName + ".frag";
+	this->screenEffect = boost::filesystem::canonical(fileName + ".frag").string();
 }
 
 std::string Camera::getScreenEffectFilename()
@@ -228,10 +230,10 @@ std::string Camera::getScreenEffectFilename()
 
 int Camera::make_resources()
 {
-	//Se non abbiamo alcun effetto settato impostiamolo a passthrough
+	//TODO: make passthrough included in memory instead from file
 	if(screenEffect.compare("") == 0)
 	{
-		screenEffect = "passthrough.frag";
+		screenEffect = boost::filesystem::canonical("passthrough.frag").string();
 	}
 
 	postprocessData.vertex_shader = make_shader(GL_VERTEX_SHADER, "passthrough.vert");

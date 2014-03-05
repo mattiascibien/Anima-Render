@@ -277,7 +277,7 @@ Object parseObject(ifstream &fstream, boost::filesystem::path curPath)
 			{
 				string filename = readString(fstream);
 				boost::filesystem::path pathFile = curPath / boost::filesystem::path(filename);
-				filename = pathFile.string();
+				filename = boost::filesystem::canonical(pathFile).string();
 				if (object.loadGeometry(filename) != 1)
 				{
 					throw ParseException(FILE_MISSING);
@@ -333,7 +333,7 @@ Object parseObject(ifstream &fstream, boost::filesystem::path curPath)
 			fstream >> name;
 			string filename = readString(fstream);
 			boost::filesystem::path pathFile = curPath / boost::filesystem::path(filename);
-			filename = pathFile.string();
+			filename = boost::filesystem::canonical(pathFile).string();
 			int id = atoi(key.substr(key.size() -1).c_str()); //TODO: migliorare come viene estratto il numero
 			if(id > 7)
 			{
