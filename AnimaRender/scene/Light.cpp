@@ -14,7 +14,7 @@ Light::Light(int lightNumber)
 
 void Light::setPosition(float x, float y, float z, float w)
 {
-	position = Vector(x, y, z, w);
+	position = glm::fvec4(x, y, z, w);
 
 }
 

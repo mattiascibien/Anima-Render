@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../data/Vector.h"
+
 
 #include <iostream>
 #include <string>
@@ -9,17 +9,19 @@
 #include "../glfuncs.h"
 #include <gl\glew.h>
 
+#include <glm/glm.hpp>
+
 class Camera
 {
 private:
 	
-	Vector position;
-	Vector direction;
-	Vector up;
-	Vector left;
-	Vector yAxis;
+	glm::vec3 position;
+	glm::vec3 direction;
+	glm::vec3 up;
+	glm::vec3 left;
+	glm::vec3 yAxis;
 	float fovY;
-	float matrix [3][3];
+	glm::mat3x3 matrix;
 	
 	//variabili di movimento
 	int fmove;
@@ -46,17 +48,17 @@ public:
 		screenEffect = "";
 	}
 	void initCamera();
-	void setPosition(Vector pos);
+	void setPosition(glm::vec3 pos);
 	void setPosition(float x, float y, float z);
-	Vector getPosition();
+	glm::vec3 getPosition();
 
-	void setDirection(Vector dir);
+	void setDirection(glm::vec3 dir);
 	void setDirection(float x, float y, float z);
-	Vector getDirection();
+	glm::vec3 getDirection();
 
-	void setUp(Vector up);
+	void setUp(glm::vec3 up);
 	void setUp(float x, float y, float z);
-	Vector getUp();
+	glm::vec3 getUp();
 
 	void setFovY(float fovy);
 	float getFovY();
@@ -80,12 +82,9 @@ public:
 
 	void setCameraRoll(int rolling);
 
-	void MatrixCreateFromAxisAngle(Vector v, float angle);
+	void MatrixCreateFromAxisAngle(glm::vec3 v, float angle);
 
-	Vector vectorMatrixTransform(Vector v);
-
-	Vector Cross(Vector left, Vector right);
-
+	glm::vec3 vectorMatrixTransform(glm::vec3 v);
 
 	int make_resources();
 };

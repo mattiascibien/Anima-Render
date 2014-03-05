@@ -43,9 +43,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)\bin\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\bin\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -84,19 +86,24 @@
     <ResourceCompile Include="AnimaRender.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="data\Color.h" />
-    <ClInclude Include="data\Vector.h" />
     <ClInclude Include="glfuncs.h" />
     <ClInclude Include="objloader\list.h" />
     <ClInclude Include="objloader\objLoader.h" />
     <ClInclude Include="objloader\obj_parser.h" />
     <ClInclude Include="objloader\string_extra.h" />
+    <ClInclude Include="primitives\cube.h" />
+    <ClInclude Include="primitives\quad.h" />
+    <ClInclude Include="primitives\tesselated_sphere.h" />
+    <ClInclude Include="primitives\sphere.h" />
     <ClInclude Include="scene\Camera.h" />
     <ClInclude Include="scene\Light.h" />
     <ClInclude Include="scene\Object.h" />
     <ClInclude Include="scene\Scene.h" />
     <ClInclude Include="scene\scene_parser.h" />
     <ClInclude Include="scene\Transform.h" />
+    <ClInclude Include="texture-formats\bmpreader.h" />
+    <ClInclude Include="texture-formats\pngreader.h" />
+    <ClInclude Include="texture-formats\tgareader.h" />
     <ClInclude Include="utils\util.h" />
   </ItemGroup>
   <ItemGroup>
@@ -106,12 +113,19 @@
     <ClCompile Include="objloader\objLoader.cpp" />
     <ClCompile Include="objloader\obj_parser.cpp" />
     <ClCompile Include="objloader\string_extra.cpp" />
+    <ClCompile Include="primitives\cube.cpp" />
+    <ClCompile Include="primitives\quad.cpp" />
+    <ClCompile Include="primitives\tesseleated_sphere.cpp" />
+    <ClCompile Include="primitives\sphere.cpp" />
     <ClCompile Include="scene\Camera.cpp" />
     <ClCompile Include="scene\Light.cpp" />
     <ClCompile Include="scene\Object.cpp" />
     <ClCompile Include="scene\Scene.cpp" />
     <ClCompile Include="scene\scene_parser.cpp" />
     <ClCompile Include="scene\Transform.cpp" />
+    <ClCompile Include="texture-formats\bmpreader.cpp" />
+    <ClCompile Include="texture-formats\pngreader.cpp" />
+    <ClCompile Include="texture-formats\tgareader.cpp" />
     <ClCompile Include="utils\util.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -123,9 +137,12 @@
     <Import Project="..\packages\freeglut.2.8.1.15\build\native\freeglut.targets" Condition="Exists('..\packages\freeglut.2.8.1.15\build\native\freeglut.targets')" />
     <Import Project="..\packages\glew.redist.1.9.0.1\build\native\glew.redist.targets" Condition="Exists('..\packages\glew.redist.1.9.0.1\build\native\glew.redist.targets')" />
     <Import Project="..\packages\glew.1.9.0.1\build\native\glew.targets" Condition="Exists('..\packages\glew.1.9.0.1\build\native\glew.targets')" />
-    <Import Project="..\packages\boost.1.55.0.10\build\native\boost.targets" Condition="Exists('..\packages\boost.1.55.0.10\build\native\boost.targets')" />
-    <Import Project="..\packages\boost_program_options.1.55.0.16\build\native\boost_program_options.targets" Condition="Exists('..\packages\boost_program_options.1.55.0.16\build\native\boost_program_options.targets')" />
-    <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+    <Import Project="..\packages\LodePNG.1.0.0\build\native\lodepng.targets" Condition="Exists('..\packages\LodePNG.1.0.0\build\native\lodepng.targets')" />
+    <Import Project="..\packages\boost.1.55.0.16\build\native\boost.targets" Condition="Exists('..\packages\boost.1.55.0.16\build\native\boost.targets')" />
+    <Import Project="..\packages\boost_filesystem-vc110.1.55.0.16\build\native\boost_filesystem-vc110.targets" Condition="Exists('..\packages\boost_filesystem-vc110.1.55.0.16\build\native\boost_filesystem-vc110.targets')" />
+    <Import Project="..\packages\boost_system-vc110.1.55.0.16\build\native\boost_system-vc110.targets" Condition="Exists('..\packages\boost_system-vc110.1.55.0.16\build\native\boost_system-vc110.targets')" />
+    <Import Project="..\packages\boost_program_options-vc110.1.55.0.16\build\native\boost_program_options-vc110.targets" Condition="Exists('..\packages\boost_program_options-vc110.1.55.0.16\build\native\boost_program_options-vc110.targets')" />
+    <Import Project="..\packages\glm.0.9.5.2\build\native\glm.targets" Condition="Exists('..\packages\glm.0.9.5.2\build\native\glm.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -135,8 +152,11 @@
     <Error Condition="!Exists('..\packages\freeglut.2.8.1.15\build\native\freeglut.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\freeglut.2.8.1.15\build\native\freeglut.targets'))" />
     <Error Condition="!Exists('..\packages\glew.redist.1.9.0.1\build\native\glew.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glew.redist.1.9.0.1\build\native\glew.redist.targets'))" />
     <Error Condition="!Exists('..\packages\glew.1.9.0.1\build\native\glew.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glew.1.9.0.1\build\native\glew.targets'))" />
-    <Error Condition="!Exists('..\packages\boost.1.55.0.10\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.55.0.10\build\native\boost.targets'))" />
-    <Error Condition="!Exists('..\packages\boost_program_options.1.55.0.16\build\native\boost_program_options.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_program_options.1.55.0.16\build\native\boost_program_options.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\packages\LodePNG.1.0.0\build\native\lodepng.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\LodePNG.1.0.0\build\native\lodepng.targets'))" />
+    <Error Condition="!Exists('..\packages\boost.1.55.0.16\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.55.0.16\build\native\boost.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_filesystem-vc110.1.55.0.16\build\native\boost_filesystem-vc110.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_filesystem-vc110.1.55.0.16\build\native\boost_filesystem-vc110.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_system-vc110.1.55.0.16\build\native\boost_system-vc110.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_system-vc110.1.55.0.16\build\native\boost_system-vc110.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_program_options-vc110.1.55.0.16\build\native\boost_program_options-vc110.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_program_options-vc110.1.55.0.16\build\native\boost_program_options-vc110.targets'))" />
+    <Error Condition="!Exists('..\packages\glm.0.9.5.2\build\native\glm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glm.0.9.5.2\build\native\glm.targets'))" />
   </Target>
 </Project>

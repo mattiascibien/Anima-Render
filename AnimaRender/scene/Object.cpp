@@ -3,9 +3,17 @@
 #include "../utils/util.h"
 #include "../objloader/obj_parser.h"
 
+#include "../primitives/sphere.h"
+#include "../primitives/cube.h"
+#include "../primitives/tesselated_sphere.h"
+#include "../primitives/quad.h"
+
 #include "Light.h"
 
 #include <list>
+#include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>
+#include <boost/filesystem.hpp>
 
 //I parametri di default vengono inizializzati nel costruttore
 Object::Object()
@@ -18,6 +26,7 @@ Object::Object()
 		data.textures[i] = -1; //Non inizializzata
 	}
 	textured = false;
+	primitiveKind = "";
 }
 
 //Ritorna se il file specificato è un obj valido
@@ -44,9 +53,9 @@ void Object::addParameter(string key, float value)
 	floatParameters.insert(pair<string,int>(key, value));
 }
 
-void Object::addParameter(string key, Vector value)
+void Object::addParameter(string key, glm::vec4 value)
 {
-	vectorParameters.insert(pair<string,Vector>(key, value));
+	vectorParameters.insert(pair<string,glm::vec4>(key, value));
 }
 
 //Effettivo rendering dell'oggetto
@@ -63,7 +72,7 @@ void Object::render()
 	}
 	
 	//Uniform vec4
-	for(std::map<std::string, Vector>::iterator it= vectorParameters.begin(); it != vectorParameters.end(); it++)
+	for(std::map<std::string, glm::vec4>::iterator it= vectorParameters.begin(); it != vectorParameters.end(); it++)
 	{
 		string name = it->first;
 
@@ -89,7 +98,7 @@ void Object::render()
 	glVertexPointer(
 		3,
 		GL_FLOAT,
-		sizeof(GLfloat)*3,
+		0,
 		(void*)0
 		);
 
@@ -104,13 +113,12 @@ void Object::render()
 	if(textured)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, data.st_buffer);
-		glClientActiveTexture(GL_TEXTURE0);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		//Indichiamo la texture da renderizzare.
+		//Texture coordinates
 		glTexCoordPointer(
 			2,
 			GL_FLOAT,
-			sizeof(GLfloat)*2,
+			0,
 			(void*)0
 			);
 	}
@@ -135,58 +143,93 @@ void Object::render()
 //Creiamo i buffer OpenGL e le texture leggendo i dati dell'obj
 int Object::makeResources()
 {
-	//Carichiamo 
-	int elementCounter = 0;
-	for(int fcount = 0; fcount < objectLoader->faceCount; fcount++)
+	if (primitiveKind == "")
 	{
-		obj_face *curFace = objectLoader->faceList[fcount];
 
-		for(int vcount = 0; vcount<3; vcount++)
+		//Carichiamo 
+		int elementCounter = 0;
+		for (int fcount = 0; fcount < objectLoader->faceCount; fcount++)
 		{
-			obj_vector *currentVertex = objectLoader->vertexList[curFace->vertex_index[vcount]];
-			for(int i = 0; i<3; i++) //Inseriamo i vertici nel buffer da bindare
-			{
-				vertices.push_back(currentVertex->e[i]);			
-			}
-			if(objectLoader->textureCount > 0)
-			{
-				obj_vector *currentTexture = objectLoader->textureList[curFace->texture_index[vcount]];
-				textured = true;
-				for(int i=0; i<2; i++) //Inserisce le coordinate di texture nel buffer che andremo a bindare successivamente
-				{
-					stCoordinates.push_back(currentTexture->e[i]); 
-				}
-			}
+			obj_face *curFace = objectLoader->faceList[fcount];
 
-			if(objectLoader->normalCount > 0)
+			for (int vcount = 0; vcount < 3; vcount++)
 			{
-				obj_vector *currentNormal = objectLoader->normalList[curFace->normal_index[vcount]];
-				for(int i=0; i<3; i++) //Inserisce le normali nel buffer
+				obj_vector *currentVertex = objectLoader->vertexList[curFace->vertex_index[vcount]];
+				vertices.push_back(glm::vec3(currentVertex->e[0], currentVertex->e[1], currentVertex->e[2]));
+				if (objectLoader->textureCount > 0)
 				{
-					normals.push_back(currentNormal->e[i]);
+					obj_vector *currentTexture = objectLoader->textureList[curFace->texture_index[vcount]];
+					textured = true;
+					stCoordinates.push_back(glm::vec2(currentTexture->e[0], currentTexture->e[1]));
 				}
-			}
 
-			elements.push_back(elementCounter++); //Riempiamo l'element buffer con un ciclo per indicare che vogliamo caricare tutti i vertici
+				if (objectLoader->normalCount > 0)
+				{
+					obj_vector *currentNormal = objectLoader->normalList[curFace->normal_index[vcount]];
+					normals.push_back(glm::vec3(currentNormal->e[0], currentNormal->e[1], currentNormal->e[2]));
+				}
+
+				elements.push_back(elementCounter++); //Riempiamo l'element buffer con un ciclo per indicare che vogliamo caricare tutti i vertici
+			}
 		}
 	}
+	else
+	{
+		if (primitiveKind.find("sphere") == 0)
+		{
+			std::vector<std::string> values;
+			boost::split(values, primitiveKind, boost::is_any_of(" "));
 
+			int rings = 10;
+			int sectors_or_tess_level = 10;
+			string kind = "geo";
+
+			if (values.size() > 1)
+			{
+				kind = values.at(1);
+			}
+
+			if (values.size() > 3)
+			{
+				rings = atoi(values.at(3).c_str());
+			}
+
+			if (values.size() > 2)
+			{
+				sectors_or_tess_level = atoi(values.at(2).c_str());
+			}
+
+			if (kind == "geo")
+				make_sphere(vertices, normals, stCoordinates, elements, rings, sectors_or_tess_level);
+			else if (kind == "tes")
+				make_tesselated_sphere(vertices, normals, stCoordinates, elements, sectors_or_tess_level);
+		}
+		else if (primitiveKind.compare("cube") == 0)
+		{
+			make_cube(vertices, normals, stCoordinates, elements);
+		}
+		else if (primitiveKind.compare("quad") == 0)
+		{
+			make_quad(vertices, normals, stCoordinates, elements);
+		}
+	}
+	
 
 	data.vertex_buffer = make_buffer(
 		GL_ARRAY_BUFFER,
 		&vertices[0],
-		vertices.size() * sizeof(GLfloat)
+		vertices.size() * sizeof(glm::vec3)
 		);
 
 	data.normal_buffer = make_buffer(
 		GL_ARRAY_BUFFER,
 		&normals[0],
-		normals.size() * sizeof(GLfloat)
+		normals.size() * sizeof(glm::vec3)
 		);
 
 
 	data.element_buffer = make_buffer(
-		GL_ARRAY_BUFFER,
+		GL_ELEMENT_ARRAY_BUFFER,
 		&elements[0],
 		elements.size() * sizeof(GLushort)
 		);
@@ -196,7 +239,7 @@ int Object::makeResources()
 		data.st_buffer = make_buffer(
 			GL_ARRAY_BUFFER,
 			&stCoordinates[0],
-			stCoordinates.size() * sizeof(GLfloat)
+			stCoordinates.size() * sizeof(glm::vec2)
 			);
 
 		for(int i = 0; i < 8; i++)
@@ -210,11 +253,14 @@ int Object::makeResources()
 		}
 	}
 
-	//Objectloader non serve più in quanto abbiamo tutti i dati nei buffer dell'oggetto data.
-	delete objectLoader;
+	if (primitiveKind == "")
+	{
+		//Objectloader non serve più in quanto abbiamo tutti i dati nei buffer dell'oggetto data.
+		delete objectLoader;
+	}
 
-	string vertexShaderFileName = material + ".vert";
-	string fragmentShaderFileName = material + ".frag";
+	string vertexShaderFileName = boost::filesystem::canonical(material + ".vert").string();
+	string fragmentShaderFileName = boost::filesystem::canonical(material + ".frag").string();
 
 	shaderData.vertex_shader = make_shader(GL_VERTEX_SHADER,vertexShaderFileName.c_str());
 	if(shaderData.vertex_shader == 0)
@@ -240,7 +286,7 @@ int Object::makeResources()
 		uniformLocations.insert(pair<string,GLint>(name, location));
 	}
 	
-	for(std::map<std::string, Vector>::iterator it= vectorParameters.begin(); it != vectorParameters.end(); it++)
+	for(std::map<std::string, glm::vec4>::iterator it= vectorParameters.begin(); it != vectorParameters.end(); it++)
 	{
 		const char* name = it->first.c_str();
 		GLint location = glGetUniformLocation(shaderData.program, name);

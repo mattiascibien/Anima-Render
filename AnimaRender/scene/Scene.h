@@ -17,10 +17,6 @@ public:
 	void render();
 	void previsitLights();
 
-
-
-	//TODO: dovrebbe essere private
-
 private:
 	Scene();
 
