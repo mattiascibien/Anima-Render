@@ -4,6 +4,7 @@ clone_folder: c:\projects\anima-render
 
 configuration:
   - Debug
+  - Release
 
 install:
   cmd: nuget restore
@@ -14,5 +15,7 @@ build:
 test: off
 
 artifacts:
-  - path: .\Debug
-    name: AnimaRender-latest-x86
+  - path: \bin\Debug
+    name: AnimaRender-latest-Debug-x86
+  - path: \bin\Release
+    name: AnimaRender-latest-Release-x86
