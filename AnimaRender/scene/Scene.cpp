@@ -9,6 +9,8 @@
 #include <GL\glew.h>
 #include <algorithm>
 
+#include <boost/filesystem.hpp>
+
 
 //Ci serve per indicare la directory del file che stiamo parsando
 //così da poter leggere scene anche se non sono nella cartella dell'eseguibile
@@ -22,7 +24,7 @@ Scene* Scene::load(string fileName)
 {
 	int lightCount = 0;
 	Scene *scene = new Scene();
-	std::string scenePath = extractDirectory(fileName);
+	boost::filesystem::path scenePath = boost::filesystem::path(fileName).parent_path();
 	ifstream fstream(fileName.c_str());
 
 	if(fstream.good())

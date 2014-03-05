@@ -68,7 +68,7 @@ string readString(ifstream &fstream)
 }
 
 //Parsa le sezioni camera del file
-Camera parseCamera(ifstream &fstream, std::string curPath)
+Camera parseCamera(ifstream &fstream, boost::filesystem::path curPath)
 {
 	Camera camera;
 	
@@ -110,7 +110,8 @@ Camera parseCamera(ifstream &fstream, std::string curPath)
 		else if(key.compare("screenEffect") == 0) 
 		{
 			string filename = readString(fstream);
-			filename = curPath + filename;
+			boost::filesystem::path pathFile = curPath / boost::filesystem::path(filename);
+			filename = pathFile.string();
 			camera.setScreenEffect(filename);			
 		}
 		else if(key.compare("#") == 0) 
@@ -126,7 +127,7 @@ Camera parseCamera(ifstream &fstream, std::string curPath)
 	return camera;
 }
 
-Transform parseTransform(ifstream &fstream, std::string curPath, int lightCount)
+Transform parseTransform(ifstream &fstream, boost::filesystem::path curPath, int lightCount)
 {
 	Transform transform;
 	checkOpenBracket(fstream);
@@ -247,7 +248,7 @@ bool tryGetVector(glm::vec4 &vect, string value)
 }
 
 //Legge un oggetto e ne carica gli elementi
-Object parseObject(ifstream &fstream, std::string curPath)
+Object parseObject(ifstream &fstream, boost::filesystem::path curPath)
 {
 	Object object;
 	checkOpenBracket(fstream);
@@ -275,7 +276,8 @@ Object parseObject(ifstream &fstream, std::string curPath)
 			if (!geometry)
 			{
 				string filename = readString(fstream);
-				filename = curPath + filename;
+				boost::filesystem::path pathFile = curPath / boost::filesystem::path(filename);
+				filename = pathFile.string();
 				if (object.loadGeometry(filename) != 1)
 				{
 					throw ParseException(FILE_MISSING);
@@ -290,7 +292,8 @@ Object parseObject(ifstream &fstream, std::string curPath)
 		else if(key.compare("material") == 0)
 		{
 			string filename = readString(fstream);
-			filename = curPath + filename;
+			boost::filesystem::path pathFile = curPath / boost::filesystem::path(filename);
+			filename = pathFile.string();
 			
 			object.setMaterial(filename);
 		}
@@ -329,7 +332,8 @@ Object parseObject(ifstream &fstream, std::string curPath)
 			string name;
 			fstream >> name;
 			string filename = readString(fstream);
-			filename = curPath + filename;
+			boost::filesystem::path pathFile = curPath / boost::filesystem::path(filename);
+			filename = pathFile.string();
 			int id = atoi(key.substr(key.size() -1).c_str()); //TODO: migliorare come viene estratto il numero
 			if(id > 7)
 			{

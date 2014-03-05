@@ -7,6 +7,7 @@
 
 #include <fstream>
 #include <exception>
+#include <boost/filesystem.hpp>
 
 #define CANT_OPEN_FILE "Can't open file"
 #define CANT_READ_FILE "Error reading file"
@@ -37,11 +38,11 @@ private:
 	std::string error;
 };
 
-Camera parseCamera(ifstream &fstream, std::string curDir);
+Camera parseCamera(ifstream &fstream, boost::filesystem::path curDir);
 
-Transform parseTransform(ifstream &fstream, std::string curDir, int lightCount);
+Transform parseTransform(ifstream &fstream, boost::filesystem::path curDir, int lightCount);
 
-Object parseObject(ifstream &fstream, std::string curDir);
+Object parseObject(ifstream &fstream, boost::filesystem::path curDir);
 
 Light parseLight(ifstream &fstream);
 
