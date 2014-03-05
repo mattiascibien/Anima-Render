@@ -24,7 +24,9 @@ Scene* Scene::load(string fileName)
 {
 	int lightCount = 0;
 	Scene *scene = new Scene();
-	boost::filesystem::path scenePath = boost::filesystem::path(fileName).parent_path();
+	boost::filesystem::path scenePath = boost::filesystem::current_path();
+	boost::filesystem::path filePath = scenePath / boost::filesystem::path(fileName);
+	fileName = filePath.string();
 	ifstream fstream(fileName.c_str());
 
 	if(fstream.good())
