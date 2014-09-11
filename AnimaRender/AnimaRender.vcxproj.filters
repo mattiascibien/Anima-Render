@@ -157,9 +157,6 @@
     <ClCompile Include="texture-formats\bmpreader.cpp">
       <Filter>Source Files\texture-formats</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\lodepng.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="primitives\sphere.cpp">
       <Filter>Source Files\primitives</Filter>
     </ClCompile>
