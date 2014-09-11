@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\data">
-      <UniqueIdentifier>{1b59ef47-4873-46da-a43d-1846548bd8be}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\objloader">
       <UniqueIdentifier>{1621820e-28e6-4cb0-8a0e-6a5f67e905ba}</UniqueIdentifier>
     </Filter>
@@ -40,6 +37,12 @@
     <Filter Include="Header Files\texture-formats">
       <UniqueIdentifier>{1be75304-5c95-4ebb-a473-93e9035a307f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\primitives">
+      <UniqueIdentifier>{7cbed56b-fd7f-43fb-a55e-600e9a209a5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\primitives">
+      <UniqueIdentifier>{a3552339-a532-4ff6-9354-caaba898a875}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnimaRender.rc">
@@ -47,9 +50,12 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClInclude Include="data\Vector.h">
       <Filter>Header Files\data</Filter>
     </ClInclude>
+=======
+>>>>>>> feature/glfw
     <ClInclude Include="utils\util.h">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
@@ -83,9 +89,6 @@
     <ClInclude Include="objloader\string_extra.h">
       <Filter>Header Files\objloader</Filter>
     </ClInclude>
-    <ClInclude Include="glfuncs.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="texture-formats\tgareader.h">
       <Filter>Header Files\texture-formats</Filter>
     </ClInclude>
@@ -94,6 +97,21 @@
     </ClInclude>
     <ClInclude Include="texture-formats\bmpreader.h">
       <Filter>Header Files\texture-formats</Filter>
+    </ClInclude>
+    <ClInclude Include="primitives\sphere.h">
+      <Filter>Header Files\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="primitives\cube.h">
+      <Filter>Header Files\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="primitives\tesselated_sphere.h">
+      <Filter>Header Files\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="primitives\quad.h">
+      <Filter>Header Files\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="glfuncs.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -136,39 +154,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.cmdline.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.config_file.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.convert.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.options_description.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.parsers.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.positional_options.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.split.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.utf8_codecvt_facet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.value_semantic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.variables_map.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.winmain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="texture-formats\tgareader.cpp">
       <Filter>Source Files\texture-formats</Filter>
     </ClCompile>
@@ -178,6 +163,7 @@
     <ClCompile Include="texture-formats\bmpreader.cpp">
       <Filter>Source Files\texture-formats</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.codecvt_error_category.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -204,6 +190,19 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_system.error_code.cpp">
       <Filter>Source Files</Filter>
+=======
+    <ClCompile Include="primitives\sphere.cpp">
+      <Filter>Source Files\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="primitives\cube.cpp">
+      <Filter>Source Files\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="primitives\tesseleated_sphere.cpp">
+      <Filter>Source Files\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="primitives\quad.cpp">
+      <Filter>Source Files\primitives</Filter>
+>>>>>>> feature/glfw
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\lodepng.cpp">
       <Filter>Source Files</Filter>

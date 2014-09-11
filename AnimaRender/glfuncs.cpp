@@ -8,6 +8,7 @@
 #include <iostream>
 #include <boost\filesystem.hpp>
 
+
 //Crea un buffer per OpenGL
 GLuint make_buffer(
 	GLenum target,

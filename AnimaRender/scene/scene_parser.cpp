@@ -68,7 +68,7 @@ string readString(ifstream &fstream)
 }
 
 //Parsa le sezioni camera del file
-Camera parseCamera(ifstream &fstream, std::string curPath)
+Camera parseCamera(ifstream &fstream, boost::filesystem::path curPath)
 {
 	Camera camera;
 	
@@ -110,7 +110,8 @@ Camera parseCamera(ifstream &fstream, std::string curPath)
 		else if(key.compare("screenEffect") == 0) 
 		{
 			string filename = readString(fstream);
-			filename = curPath + filename;
+			boost::filesystem::path pathFile = curPath / boost::filesystem::path(filename);
+			filename = pathFile.string();
 			camera.setScreenEffect(filename);			
 		}
 		else if(key.compare("#") == 0) 
@@ -126,7 +127,7 @@ Camera parseCamera(ifstream &fstream, std::string curPath)
 	return camera;
 }
 
-Transform parseTransform(ifstream &fstream, std::string curPath, int lightCount)
+Transform parseTransform(ifstream &fstream, boost::filesystem::path curPath, int lightCount)
 {
 	Transform transform;
 	checkOpenBracket(fstream);
@@ -192,7 +193,6 @@ Transform parseTransform(ifstream &fstream, std::string curPath, int lightCount)
 	return transform;
 }
 
-
 Light parseLight(ifstream &fstream)
 {
 	static int currentLight = GL_LIGHT0;
@@ -232,7 +232,7 @@ Light parseLight(ifstream &fstream)
 	return light;
 }
 
-bool tryGetVector(Vector &vect, string value)
+bool tryGetVector(glm::vec4 &vect, string value)
 {
 	std::vector<std::string> numbers;
 	boost::split(numbers, value, boost::is_any_of(","));
@@ -248,30 +248,62 @@ bool tryGetVector(Vector &vect, string value)
 }
 
 //Legge un oggetto e ne carica gli elementi
-Object parseObject(ifstream &fstream, std::string curPath)
+Object parseObject(ifstream &fstream, boost::filesystem::path curPath)
 {
 	Object object;
 	checkOpenBracket(fstream);
+
+	bool geometry = false;
 
 	while(!fstream.eof())
 	{
 		string key = getKeyword(fstream);
 
-		if(key.compare("geometry") == 0)
+		if (key.compare("primitive") == 0)
 		{
-			string filename = readString(fstream);
-			filename = curPath + filename;
-			if(object.loadGeometry(filename) != 1)
+			if (!geometry)
 			{
-				throw ParseException(FILE_MISSING);
+				object.primitiveKind = readString(fstream);
+				geometry = true;
+			}
+			else
+			{
+				throw ParseException(PRIMITIVE_OR_GEOMETRY);
+			}
+		}
+		else if(key.compare("geometry") == 0)
+		{
+			if (!geometry)
+			{
+				string filename = readString(fstream);
+				boost::filesystem::path pathFile = curPath / boost::filesystem::path(filename);
+				filename = boost::filesystem::canonical(pathFile).string();
+				if (object.loadGeometry(filename) != 1)
+				{
+					throw ParseException(FILE_MISSING);
+				}
+				geometry = true;
+			}
+			else
+			{
+				throw ParseException(PRIMITIVE_OR_GEOMETRY);
 			}
 		} 
 		else if(key.compare("material") == 0)
 		{
 			string filename = readString(fstream);
-			filename = curPath + filename;
+			boost::filesystem::path pathFile = curPath / boost::filesystem::path(filename);
+			filename = pathFile.string();
 			
 			object.setMaterial(filename);
+		}
+		else if (key.compare("textured") == 0)
+		{
+			string value = readString(fstream);
+			if (value.compare("true") == 0)
+			{
+				object.textured = true;
+			}
 		}
 		else if(key.compare("params") == 0)
 		{
@@ -282,7 +314,7 @@ Object parseObject(ifstream &fstream, std::string curPath)
 			for(unsigned int i=0; i<keyValuePairs.size(); ++i)
 			{
 				//Un po' hackereccia ma funziona.
-				Vector value;
+				glm::vec4 value;
 				std::vector<std::string> currentKeyValuePair;
 				boost::split(currentKeyValuePair, keyValuePairs[i], boost::is_any_of("="));
 				if(tryGetVector(value, currentKeyValuePair[1])) //E' un vettore
@@ -300,7 +332,8 @@ Object parseObject(ifstream &fstream, std::string curPath)
 			string name;
 			fstream >> name;
 			string filename = readString(fstream);
-			filename = curPath + filename;
+			boost::filesystem::path pathFile = curPath / boost::filesystem::path(filename);
+			filename = boost::filesystem::canonical(pathFile).string();
 			int id = atoi(key.substr(key.size() -1).c_str()); //TODO: migliorare come viene estratto il numero
 			if(id > 7)
 			{
