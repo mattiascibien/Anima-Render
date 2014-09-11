@@ -208,6 +208,9 @@ static void mouseButton(GLFWwindow *window, int button, int action, int mods) {
 			mousePressed = false;
 		}
 		else  {
+			double x, y;
+			glfwGetCursorPos(window, &x, &y);
+			scn->getActiveCamera().setMouseMove((int)x, (int)y);
 			mousePressed = true;
 		}
 	}
