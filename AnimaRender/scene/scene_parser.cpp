@@ -238,10 +238,10 @@ bool tryGetVector(glm::vec4 &vect, string value)
 	boost::split(numbers, value, boost::is_any_of(","));
 	if(numbers.size() == 4)
 	{
-		vect.x = atof(numbers[0].c_str());
-		vect.y = atof(numbers[1].c_str());
-		vect.z = atof(numbers[2].c_str());
-		vect.w = atof(numbers[3].c_str());
+		vect.x = (float)atof(numbers[0].c_str());
+		vect.y = (float)atof(numbers[1].c_str());
+		vect.z = (float)atof(numbers[2].c_str());
+		vect.w = (float)atof(numbers[3].c_str());
 		return true;
 	}
 	return false;
@@ -323,7 +323,7 @@ Object parseObject(ifstream &fstream, boost::filesystem::path curPath)
 				}
 				else //E' un float
 				{
-					object.addParameter(currentKeyValuePair[0], atof(currentKeyValuePair[1].c_str()));
+					object.addParameter(currentKeyValuePair[0], (float)atof(currentKeyValuePair[1].c_str()));
 				}
 			}
 		}

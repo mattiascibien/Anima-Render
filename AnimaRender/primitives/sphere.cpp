@@ -7,8 +7,8 @@ void make_sphere(std::vector<glm::vec3> &vertices, std::vector<glm::vec3> &norma
 {
 	int radius = 1;
 
-	float const R = 1. / (float) (rings - 1);
-	float const S = 1. / (float) (sectors - 1);
+	float const R = 1.0f / (float) (rings - 1);
+	float const S = 1.0f / (float) (sectors - 1);
 	int r, s;
 
 	vertices.resize(rings * sectors);

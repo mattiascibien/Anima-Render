@@ -21,7 +21,7 @@ void Camera::initCamera()
 	yAxis.z = 0.0f;
 	
 	speed = 1.0f;
-	PiOver4 = 0.7853982;
+	PiOver4 = 0.7853982f;
 }
 
 void Camera::setPosition(glm::vec3 pos)
