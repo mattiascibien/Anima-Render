@@ -265,7 +265,6 @@ bool init_framebuffer(int width, int height)
 int main(int argc, char* argv[])
 {
 	int width, height;
-	unsigned int glutOptions = GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH;
 	string scenefile;
 
 	//Parsing della riga di comando
