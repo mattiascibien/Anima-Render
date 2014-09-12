@@ -43,6 +43,9 @@
     <Filter Include="Source Files\primitives">
       <UniqueIdentifier>{a3552339-a532-4ff6-9354-caaba898a875}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\shaders">
+      <UniqueIdentifier>{6a2779cf-df1b-48fc-b60e-9bfb22db7996}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnimaRender.rc">
@@ -106,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="primitives\quad.h">
       <Filter>Header Files\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="shaders\Passthrough.h">
+      <Filter>Header Files\shaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

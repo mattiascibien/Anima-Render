@@ -7,6 +7,8 @@
 
 #include <boost/filesystem.hpp>
 
+#include "../shaders/Passthrough.h"
+
 //Inizializzazione della camera
 void Camera::initCamera()
 {
@@ -230,16 +232,18 @@ std::string Camera::getScreenEffectFilename()
 
 int Camera::make_resources()
 {
-	//TODO: make passthrough included in memory instead from file
-	if(screenEffect.compare("") == 0)
-	{
-		screenEffect = boost::filesystem::canonical("passthrough.frag").string();
-	}
-
-	postprocessData.vertex_shader = make_shader(GL_VERTEX_SHADER, "passthrough.vert");
+	postprocessData.vertex_shader = compile_shader(GL_VERTEX_SHADER, passthrough_vert, passthrough_vert_count);
 	if(postprocessData.vertex_shader == 0)
 		return 0;
-	postprocessData.fragment_shader = make_shader(GL_FRAGMENT_SHADER, screenEffect.c_str());
+
+	if (screenEffect.compare("") == 0)
+	{
+		postprocessData.fragment_shader = compile_shader(GL_FRAGMENT_SHADER, passthrough_frag, passthrough_frag_count);
+	}
+	else
+	{
+		postprocessData.fragment_shader = make_shader(GL_FRAGMENT_SHADER, screenEffect.c_str());
+	}	
 	if(postprocessData.fragment_shader == 0)
 		return 0;
 	postprocessData.program = make_program(postprocessData.vertex_shader, postprocessData.fragment_shader);

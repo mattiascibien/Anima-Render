@@ -169,6 +169,7 @@
     <ClInclude Include="scene\Scene.h" />
     <ClInclude Include="scene\scene_parser.h" />
     <ClInclude Include="scene\Transform.h" />
+    <ClInclude Include="shaders\Passthrough.h" />
     <ClInclude Include="texture-formats\bmpreader.h" />
     <ClInclude Include="texture-formats\pngreader.h" />
     <ClInclude Include="texture-formats\tgareader.h" />

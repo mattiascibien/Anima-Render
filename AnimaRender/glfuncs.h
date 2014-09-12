@@ -38,4 +38,6 @@ void show_info_log(
 
 GLuint make_shader(GLenum type, const char *filename);
 
+GLuint compile_shader(GLenum type, GLchar *source, GLint length, const char* filename = nullptr);
+
 GLuint make_program(GLuint vertex_shader, GLuint fragment_shader);

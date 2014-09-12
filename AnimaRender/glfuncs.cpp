@@ -94,10 +94,8 @@ void show_info_log(
 	free(log);
 }
 
-GLuint make_shader(GLenum type, const char *filename)
+GLuint compile_shader(GLenum type, GLchar *source, GLint length, const char* filename)
 {
-	GLint length;
-	GLchar *source = (char*)file_contents(filename, &length);
 	GLuint shader;
 	GLint shader_ok;
 
@@ -106,7 +104,12 @@ GLuint make_shader(GLenum type, const char *filename)
 
 	shader = glCreateShader(type);
 	glShaderSource(shader, 1, (const GLchar**)&source, &length);
-	free(source);
+
+	//Just a trick for not freeing unfreable memory
+	if (filename)
+		free(source);
+	else
+		filename = "Internal Shader";
 	glCompileShader(shader);
 
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &shader_ok);
@@ -116,7 +119,16 @@ GLuint make_shader(GLenum type, const char *filename)
 		glDeleteShader(shader);
 		return 0;
 	}
+
 	return shader;
+}
+
+GLuint make_shader(GLenum type, const char *filename)
+{
+	GLint length;
+	GLchar *source = (char*)file_contents(filename, &length);
+	
+	return compile_shader(type, source, length, filename);
 }
 
 GLuint make_program(GLuint vertex_shader, GLuint fragment_shader)
