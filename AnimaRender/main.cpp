@@ -264,16 +264,19 @@ bool init_framebuffer(int width, int height)
 //-------------------------------------------------------------------------------------
 int main(int argc, char* argv[])
 {
-	int width, height;
+	int width, height, multisamples;
+	bool fullscreen;
 	string scenefile;
 
 	//Parsing della riga di comando
 	po::options_description desc("Available options");
 	desc.add_options()
 		( "help", "show help")
-		( "width", po::value<int>(&width)->default_value(500), "window width")
-		( "height", po::value<int>(&height)->default_value(500), "windows height")
+		( "width", po::value<int>(&width)->default_value(800), "window width")
+		( "height", po::value<int>(&height)->default_value(600), "windows height")
 		( "scene", po::value<string>(), "file to render")
+		("fullscreen", po::value<bool>()->default_value(false), "render fullscreen")
+		("aa", po::value<int>()->default_value(0), "antialiasing (0 for disable)")
 		;
 	po::positional_options_description pos;
 	pos.add("scene", 1);
@@ -299,6 +302,16 @@ int main(int argc, char* argv[])
 		width = vm["width"].as<int>();
 	}
 
+	if (vm.count("aa"))
+	{
+		multisamples = vm["aa"].as<int>();
+	}
+
+	if (vm.count("fullscreen"))
+	{
+		fullscreen = vm["fullscreen"].as<bool>();
+	}
+
 	if (vm.count("scene")) 
 	{
 		scenefile = vm["scene"].as<string>();
@@ -314,8 +327,10 @@ int main(int argc, char* argv[])
 
 	//glfw Initialization
 	glfwInit();
+	glfwDefaultWindowHints();
+	glfwWindowHint(GLFW_SAMPLES, multisamples);
 
-	window = glfwCreateWindow(width, height, "Anima Render", NULL, NULL);
+	window = glfwCreateWindow(width, height, "Anima Render", fullscreen ? glfwGetPrimaryMonitor() : NULL, NULL);
 
 	glfwMakeContextCurrent(window);
 
