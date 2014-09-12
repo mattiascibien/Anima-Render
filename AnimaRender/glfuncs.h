@@ -14,6 +14,8 @@ typedef struct {
 	GLuint color_buffer;
 	GLuint st_buffer;
 	GLuint normal_buffer;
+	GLuint tangent_buffer;
+	GLuint bitangent_buffer;
 	GLuint textures[8];
 
 } GlData;

@@ -110,6 +110,7 @@ void Object::render()
 		(void*)0
 		);
 
+
 	if(textured)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, data.st_buffer);
@@ -213,6 +214,8 @@ int Object::makeResources()
 			make_quad(vertices, normals, stCoordinates, elements);
 		}
 	}
+
+	computeTangentBasis();
 	
 
 	data.vertex_buffer = make_buffer(
@@ -225,6 +228,19 @@ int Object::makeResources()
 		GL_ARRAY_BUFFER,
 		&normals[0],
 		normals.size() * sizeof(glm::vec3)
+		);
+
+
+	data.tangent_buffer = make_buffer(
+		GL_ARRAY_BUFFER,
+		&tangents[0],
+		tangents.size() * sizeof(glm::vec3)
+		);
+
+	data.bitangent_buffer = make_buffer(
+		GL_ARRAY_BUFFER,
+		&bitangents[0],
+		bitangents.size() * sizeof(glm::vec3)
 		);
 
 
@@ -294,4 +310,46 @@ int Object::makeResources()
 	}
 	
 	return 1;
+}
+
+
+//http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-13-normal-mapping/
+void Object::computeTangentBasis()
+{
+	for (int i = 0; i < vertices.size(); i+=3)
+	{
+		// Shortcuts for vertices
+		glm::vec3 & v0 = vertices[i + 0];
+		glm::vec3 & v1 = vertices[i + 1];
+		glm::vec3 & v2 = vertices[i + 2];
+
+		// Shortcuts for UVs
+		glm::vec2 & uv0 = stCoordinates[i + 0];
+		glm::vec2 & uv1 = stCoordinates[i + 1];
+		glm::vec2 & uv2 = stCoordinates[i + 2];
+
+		// Edges of the triangle : postion delta
+		glm::vec3 deltaPos1 = v1 - v0;
+		glm::vec3 deltaPos2 = v2 - v0;
+
+		// UV delta
+		glm::vec2 deltaUV1 = uv1 - uv0;
+		glm::vec2 deltaUV2 = uv2 - uv0;
+
+
+		float r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x);
+		glm::vec3 tangent = (deltaPos1 * deltaUV2.y - deltaPos2 * deltaUV1.y)*r;
+		glm::vec3 bitangent = (deltaPos2 * deltaUV1.x - deltaPos1 * deltaUV2.x)*r;
+
+		// Set the same tangent for all three vertices of the triangle.
+		// They will be merged later, in vboindexer.cpp
+		tangents.push_back(tangent);
+		tangents.push_back(tangent);
+		tangents.push_back(tangent);
+
+		// Same thing for binormals
+		bitangents.push_back(bitangent);
+		bitangents.push_back(bitangent);
+		bitangents.push_back(bitangent);
+	}
 }

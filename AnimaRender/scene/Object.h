@@ -28,12 +28,17 @@ public:
 	int makeResources();
 	string primitiveKind;
 	bool textured;
+
+	void computeTangentBasis();
 private:
 	objLoader* objectLoader;
 	std::vector<glm::vec3> vertices;
 	std::vector<GLushort> elements;
 	std::vector<glm::vec2> stCoordinates;
 	std::vector<glm::vec3> normals;
+
+	std::vector<glm::vec3> tangents;
+	std::vector<glm::vec3> bitangents;
 
 	std::string material;
 	std::string textureNames[8];
