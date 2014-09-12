@@ -1,9 +1,6 @@
 #include <GL\glew.h>
-#ifdef __APPLE__
-#include <GLUT\glut.h>
-#else
-#include <GL\glut.h>
-#endif
+
+#include <GLFW\glfw3.h>
 
 #include <boost\program_options.hpp>
 
@@ -37,7 +34,7 @@ GLushort fbo_elements[] = { 0, 1, 2, 3 };
 GLuint fbo, fbo_texture, rbo_depth;
 GLuint vbo_fbo_vertices, vbo_fbo_st, fbo_elements_buf;
 
-static void render(void)
+static void render(int width, int height)
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 	scn->getActiveCamera().cameraMove();
@@ -62,9 +59,9 @@ static void render(void)
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glUseProgram(scn->getActiveCamera().postprocessData.program);	
 
-	glUniform1f(scn->getActiveCamera().textureHeightUniformLocation, (float)glutGet(GLUT_WINDOW_HEIGHT));
+	glUniform1f(scn->getActiveCamera().textureHeightUniformLocation, height);
 
-	glUniform1f(scn->getActiveCamera().textureWidthUniformLocation, (float)glutGet(GLUT_WINDOW_WIDTH));
+	glUniform1f(scn->getActiveCamera().textureWidthUniformLocation, width);
 
 	glUniform1i(scn->getActiveCamera().textureUniformLocation, 9);
 	glActiveTexture(GL_TEXTURE9);
@@ -97,7 +94,6 @@ static void render(void)
         GL_UNSIGNED_SHORT,  /* type */
         (void*)0            /* element array buffer offset */
     );
-	glutSwapBuffers();
 }
 
 static void reshape(int width, int height)
@@ -121,98 +117,106 @@ static void reshape(int width, int height)
 //-- Keyboard -------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------
 
-//Imposta il movimento della camera nella direzione del pulsante premuto
-static void processNormalKeys(unsigned char key, int xx, int yy) { 
+static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, GL_TRUE);
 
-		if (key == 27)
-			  exit(0);
-
-		switch (key){
-		case 'q':			// Roll verso sinistra
+	switch (key)
+	{
+	case GLFW_KEY_Q:
+		if (action == GLFW_PRESS)
 			scn->getActiveCamera().setCameraRoll(1);
-			break;
-		case 'e':			// Roll verso destra
-			scn->getActiveCamera().setCameraRoll(-1);
-			break;
-		case 'w':			// Movimento avanti
-			scn->getActiveCamera().setMoveAhead(1);
-			break;
-		case 's':			// Movimento indietro
-			scn->getActiveCamera().setMoveAhead(-1);
-			break;
-		case 'a':			// Movimento a sinistra
-			scn->getActiveCamera().setMoveLateral(-1);
-			break;
-		case 'd':			// Movimento a destra
-			scn->getActiveCamera().setMoveLateral(1);
-			break;
-		case 'z':			// Movimento in su
-			scn->getActiveCamera().setMoveUp(-1);
-			break;
-		case 'x':			// Movimento in giù
-			scn->getActiveCamera().setMoveUp(1);
-			break;
-		case 'o':			// Camera precedente
-			scn->prevCamera();
-			break;
-		case 'p':			// Camera successiva
-			scn->nextCamera();
-			break;
-		}
-
-		glutPostRedisplay();
-} 
-
-//Ferma il movimento della camera nella direzione del pulsante rilasciato
-static void keyUp(unsigned char key, int xx, int yy){
-	
-	switch (key){
-		case 'w':
-		case 's':			
-			scn->getActiveCamera().setMoveAhead(0);
-			break;
-		case 'a':
-		case 'd':			
-			scn->getActiveCamera().setMoveLateral(0);
-			break;
-		case 'q':
-		case 'e':			
+		else if (action == GLFW_RELEASE)
 			scn->getActiveCamera().setCameraRoll(0);
-			break;
-		case 'z':
-		case 'x':			
+		break;
+	case GLFW_KEY_E:
+		if (action == GLFW_PRESS)
+			scn->getActiveCamera().setCameraRoll(-1);
+		else if (action == GLFW_RELEASE)
+			scn->getActiveCamera().setCameraRoll(0);
+		break;
+	case GLFW_KEY_W:
+		if (action == GLFW_PRESS)
+			scn->getActiveCamera().setMoveAhead(1);
+		else if (action == GLFW_RELEASE)
+			scn->getActiveCamera().setMoveAhead(0);
+		break;
+	case GLFW_KEY_S:
+		if (action == GLFW_PRESS)
+			scn->getActiveCamera().setMoveAhead(-1);
+		else if (action == GLFW_RELEASE)
+			scn->getActiveCamera().setMoveAhead(0);
+		break;
+	case GLFW_KEY_A:
+		if (action == GLFW_PRESS)
+			scn->getActiveCamera().setMoveLateral(-1);
+		else if (action == GLFW_RELEASE)
+			scn->getActiveCamera().setMoveLateral(0);
+		break;
+	case GLFW_KEY_D:
+		if (action == GLFW_PRESS)
+			scn->getActiveCamera().setMoveLateral(1);
+		else if (action == GLFW_RELEASE)
+			scn->getActiveCamera().setMoveLateral(0);
+		break;
+	case GLFW_KEY_Z:
+		if (action == GLFW_PRESS)
+			scn->getActiveCamera().setMoveUp(-1);
+		else if (action == GLFW_RELEASE)
 			scn->getActiveCamera().setMoveUp(0);
-			break;
-		}
+		break;
+	case GLFW_KEY_X:
+		if (action == GLFW_PRESS)
+			scn->getActiveCamera().setMoveUp(1);
+		else if (action == GLFW_RELEASE)
+			scn->getActiveCamera().setMoveUp(0);
+		break;
+	case GLFW_KEY_O:
+		if (action == GLFW_PRESS)
+			scn->prevCamera();
+		break;
+	case GLFW_KEY_P:
+		if (action == GLFW_PRESS)
+			scn->nextCamera();
+		break;
+	}
 }
+
 
 //-------------------------------------------------------------------------------------
 //-- Mouse ----------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------
 
+static bool mousePressed = false;
 
-static void mouseMove(int x, int y)
+static void mouseMove(GLFWwindow* window, double x, double y)
 {
 	// Rotazione del mouse
-	scn->getActiveCamera().mouseMove(x, y);
+	if (mousePressed)
+		scn->getActiveCamera().mouseMove((int)x, (int)y);
 }
 
-static void mouseButton(int button, int state, int x, int y) {
+static void mouseButton(GLFWwindow *window, int button, int action, int mods) {
 
 	// Viene effettuato solo se il pulsante sinistro del mouse è premuto
-	if (button == GLUT_LEFT_BUTTON) {
+	if (button == GLFW_MOUSE_BUTTON_LEFT) {
 
-		if (state == GLUT_UP)
+		if (action == GLFW_RELEASE)
 		{	
 			scn->getActiveCamera().resetMouseMove();
+			mousePressed = false;
 		}
 		else  {
-			scn->getActiveCamera().setMouseMove(x,y);
+			double x, y;
+			glfwGetCursorPos(window, &x, &y);
+			scn->getActiveCamera().setMouseMove((int)x, (int)y);
+			mousePressed = true;
 		}
 	}
 }
 
-bool init_framebuffer()
+bool init_framebuffer(int width, int height)
 {
 	glActiveTexture(GL_TEXTURE9);
 	glGenTextures(1, &fbo_texture);
@@ -221,13 +225,13 @@ bool init_framebuffer()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 
 	glGenRenderbuffers(1, &rbo_depth);
 	glBindRenderbuffer(GL_RENDERBUFFER, rbo_depth);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
 
@@ -260,17 +264,19 @@ bool init_framebuffer()
 //-------------------------------------------------------------------------------------
 int main(int argc, char* argv[])
 {
-	int width, height;
-	unsigned int glutOptions = GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH;
+	int width, height, multisamples;
+	bool fullscreen;
 	string scenefile;
 
 	//Parsing della riga di comando
 	po::options_description desc("Available options");
 	desc.add_options()
 		( "help", "show help")
-		( "width", po::value<int>(&width)->default_value(500), "window width")
-		( "height", po::value<int>(&height)->default_value(500), "windows height")
+		( "width", po::value<int>(&width)->default_value(800), "window width")
+		( "height", po::value<int>(&height)->default_value(600), "windows height")
 		( "scene", po::value<string>(), "file to render")
+		("fullscreen", po::value<bool>()->default_value(false), "render fullscreen")
+		("aa", po::value<int>()->default_value(0), "antialiasing (0 for disable)")
 		;
 	po::positional_options_description pos;
 	pos.add("scene", 1);
@@ -296,6 +302,16 @@ int main(int argc, char* argv[])
 		width = vm["width"].as<int>();
 	}
 
+	if (vm.count("aa"))
+	{
+		multisamples = vm["aa"].as<int>();
+	}
+
+	if (vm.count("fullscreen"))
+	{
+		fullscreen = vm["fullscreen"].as<bool>();
+	}
+
 	if (vm.count("scene")) 
 	{
 		scenefile = vm["scene"].as<string>();
@@ -307,24 +323,22 @@ int main(int argc, char* argv[])
 		return EXIT_FAILURE;
 	}
 
-	//Inizializzazione di glut
-	glutInit(&argc, argv);
-	glutInitDisplayMode(glutOptions);
-	glutInitWindowSize(width, height);
-	glutCreateWindow("Anima Render");
-	glutDisplayFunc(&render);
-	glutReshapeFunc(&reshape);
+	GLFWwindow* window;
 
-	glutIdleFunc(&render); //Evitiamo le chiamate a glutPostRedisplay()
+	//glfw Initialization
+	glfwInit();
+	glfwDefaultWindowHints();
+	glfwWindowHint(GLFW_SAMPLES, multisamples);
 
-	//Gestione della keyboard
-	glutIgnoreKeyRepeat(1);
-	glutKeyboardFunc(&processNormalKeys);
-	glutKeyboardUpFunc(&keyUp);
+	window = glfwCreateWindow(width, height, "Anima Render", fullscreen ? glfwGetPrimaryMonitor() : NULL, NULL);
 
-	//Gestione del mouse
-	glutMouseFunc(&mouseButton);
-	glutMotionFunc(&mouseMove);
+	glfwMakeContextCurrent(window);
+
+	glfwSetKeyCallback(window, key_callback);
+
+	glfwSetMouseButtonCallback(window, mouseButton);
+	
+	glfwSetCursorPosCallback(window, mouseMove);
 
 	glewInit();
 	if(!GLEW_VERSION_2_0)
@@ -348,13 +362,28 @@ int main(int argc, char* argv[])
 	}
 #endif
 	glEnable(GL_TEXTURE_2D);
-	if(!init_framebuffer())
+	if(!init_framebuffer(width, height))
 	{
 		return EXIT_FAILURE;
 	}
 
-	//Render loop principale
-	glutMainLoop();
+	while (!glfwWindowShouldClose(window))
+	{
+		float ratio;
+		int width, height;
+		glfwGetFramebufferSize(window, &width, &height);
+
+		reshape(width, height);
+
+		render(width, height);
+
+		glfwSwapBuffers(window);
+		glfwPollEvents();
+	}
+
+	glfwDestroyWindow(window);
+
+	glfwTerminate();
 
 	delete scn;
 

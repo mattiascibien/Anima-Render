@@ -86,9 +86,6 @@
     <ClInclude Include="objloader\string_extra.h">
       <Filter>Header Files\objloader</Filter>
     </ClInclude>
-    <ClInclude Include="glfuncs.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="texture-formats\tgareader.h">
       <Filter>Header Files\texture-formats</Filter>
     </ClInclude>
@@ -112,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="shaders\Passthrough.h">
       <Filter>Header Files\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="glfuncs.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
