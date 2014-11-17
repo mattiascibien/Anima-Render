@@ -13,7 +13,7 @@ Anima Render is a OpenGL 2.0 scene renderer that started as a university project
     * Quad
     * Geosphere
     * Tesselated sphere
- * Support for shaders including fullscreen effects (some of them are included in the repository anima-render-content)
+ * Support for shaders including fullscreen effects (some of them are included in the repository [anima-render-content](https://bitbucket.org/anima-render/anima-render-content))
  	* PhongBlinn Lighting
  	* Cook Torrance Lighing
  * Multiple cameras (cycle with 'O' and 'P')
