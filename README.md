@@ -2,7 +2,10 @@
 
 Anima Render is a OpenGL 2.0 scene renderer that started as a university project and then eveolved into an open-source (BSD licensed) one.
 
-[![Build status](https://ci-beta.appveyor.com/api/projects/status/bka7f0u6915xieb0)](https://ci-beta.appveyor.com/project/mattiascibien/anima-render-456)
+Master: [![Build status](https://ci.appveyor.com/api/projects/status/7plvfmbg09t9pnn0?svg=true)](https://ci.appveyor.com/project/mattiascibien/anima-render)
+
+Develop: [![Build status](https://ci.appveyor.com/api/projects/status/7plvfmbg09t9pnn0/branch/develop?svg=true)](https://ci.appveyor.com/project/mattiascibien/anima-render/branch/develop)
+
 
 ## Features
 
