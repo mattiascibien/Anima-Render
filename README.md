@@ -1,5 +1,7 @@
 # Anima Render
 
+> ⚠️ The next version of anima-render is being developed at [mattiascibien/anima](/mattiascibien/anima). This repository will not be maintained anymore, except for a last update to move from nuget to [vcpkg](https://github.com/Microsoft/vcpkg/) for dependencies management.
+
 Anima Render is a OpenGL 2.0 scene renderer that started as a university project and then eveolved into an open-source (BSD licensed) one.
 
 Master: [![Build status](https://ci.appveyor.com/api/projects/status/7plvfmbg09t9pnn0?svg=true)](https://ci.appveyor.com/project/mattiascibien/anima-render)
